@@ -187,18 +187,18 @@ export default function SettingsModal({
           </p>
         </div>
 
-        {/* Server Security Notice */}
+        {/* Privacy Note */}
         <div style={{
-          background: "rgba(99, 102, 241, 0.08)",
-          border: "1px solid rgba(99, 102, 241, 0.2)",
+          background: "rgba(99, 102, 241, 0.06)",
+          border: "1px solid rgba(99, 102, 241, 0.18)",
           borderRadius: "var(--radius-md)",
-          padding: "12px 14px",
+          padding: "10px 14px",
           marginBottom: "24px",
           fontSize: "0.78rem",
           color: "var(--text-muted)",
           lineHeight: 1.45
         }}>
-          💡 <strong>Deployment Tip:</strong> For permanent server-wide AI on Render, add <code style={{ color: "#a5b4fc" }}>GEMINI_API_KEY</code> in Render Dashboard &rarr; <em>interview-accelerator-backend</em> &rarr; <em>Environment</em>.
+          🔒 <strong>Privacy & Security:</strong> Your credentials and interview transcripts remain private and are used solely to conduct your mock session.
         </div>
 
         {/* Buttons */}
