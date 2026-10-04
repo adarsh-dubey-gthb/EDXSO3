@@ -27,13 +27,58 @@ export function getUserId() {
   return uid;
 }
 
+export function getApiKey() {
+  return localStorage.getItem("interview_accelerator_gemini_key") || "";
+}
+
+export function setApiKey(key) {
+  if (key && key.trim()) {
+    localStorage.setItem("interview_accelerator_gemini_key", key.trim());
+  } else {
+    localStorage.removeItem("interview_accelerator_gemini_key");
+  }
+}
+
+function getAuthHeaders(extra = {}) {
+  const headers = {
+    "X-User-Id": getUserId(),
+    ...extra,
+  };
+  const key = getApiKey();
+  if (key) {
+    headers["X-Api-Key"] = key;
+  }
+  return headers;
+}
+
+export async function testApiKey(key) {
+  const activeKey = key !== undefined ? key.trim() : getApiKey();
+  const response = await fetch(`${API_BASE}/test-key`, {
+    method: "POST",
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify({ api_key: activeKey }),
+  });
+  if (!response.ok) {
+    return { valid: false, message: "Could not connect to backend server." };
+  }
+  return await response.json();
+}
+
+export async function fetchHealth() {
+  try {
+    const res = await fetch(`${API_BASE}/health`);
+    if (res.ok) return await res.json();
+  } catch (e) {}
+  return { status: "offline", gemini_configured: false, openai_configured: false };
+}
+
 export async function uploadDocument(file) {
   const formData = new FormData();
   formData.append("file", file);
   
   const response = await fetch(`${API_BASE}/extract-text`, {
     method: "POST",
-    headers: { "X-User-Id": getUserId() },
+    headers: getAuthHeaders(),
     body: formData,
   });
   
@@ -56,14 +101,12 @@ export async function fetchSampleData() {
 export async function analyzeRoleAndResume(jobDescription, resume, provider = "gemini") {
   const response = await fetch(`${API_BASE}/analyze`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-User-Id": getUserId()
-    },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({
       job_description: jobDescription,
       resume: resume,
-      provider: provider || "gemini"
+      provider: provider || "gemini",
+      api_key: getApiKey() || undefined
     }),
   });
   
@@ -78,17 +121,15 @@ export async function analyzeRoleAndResume(jobDescription, resume, provider = "g
 export async function startInterviewSession(roleAnalysis, candidateAnalysis, jobFit, persona = "Professional & Rigorous", provider = "gemini") {
   const response = await fetch(`${API_BASE}/interview/start`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-User-Id": getUserId()
-    },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({
       role_analysis: roleAnalysis,
       candidate_analysis: candidateAnalysis,
       job_fit: jobFit,
       interviewer_persona: persona,
       provider: provider || "gemini",
-      user_id: getUserId()
+      user_id: getUserId(),
+      api_key: getApiKey() || undefined
     }),
   });
 
@@ -103,14 +144,15 @@ export async function startInterviewSession(roleAnalysis, candidateAnalysis, job
 export async function submitInterviewAnswer(sessionId, answerText, wpm = 0, durationSeconds = 0, fillerWords = {}, provider = "gemini") {
   const response = await fetch(`${API_BASE}/interview/respond`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({
       session_id: sessionId,
       answer_text: answerText,
       wpm: wpm,
       duration_seconds: durationSeconds,
       filler_words: fillerWords,
-      provider: provider || "gemini"
+      provider: provider || "gemini",
+      api_key: getApiKey() || undefined
     }),
   });
 
@@ -124,7 +166,8 @@ export async function submitInterviewAnswer(sessionId, answerText, wpm = 0, dura
 
 export async function finishInterviewSession(sessionId) {
   const response = await fetch(`${API_BASE}/interview/finish/${sessionId}`, {
-    method: "POST"
+    method: "POST",
+    headers: getAuthHeaders()
   });
   return await response.json();
 }
@@ -135,7 +178,9 @@ export async function fetchPerformanceReport(sessionId, provider = "gemini") {
     url += `?provider=${encodeURIComponent(provider)}`;
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: getAuthHeaders()
+  });
   if (!response.ok) {
     const err = await response.json().catch(() => ({ detail: "Failed to generate report" }));
     throw new Error(err.detail || "Report generation failed");

@@ -10,7 +10,9 @@ export default function InputScreen({
   onAnalyze,
   isLoading,
   sampleData,
-  onLoadSample
+  onLoadSample,
+  isAiActive,
+  onOpenSettings
 }) {
   const [jdFileName, setJdFileName] = useState("");
   const [resumeFileName, setResumeFileName] = useState("");
@@ -81,6 +83,55 @@ export default function InputScreen({
         <p style={{ color: "var(--text-muted)", fontSize: "1.05rem", maxWidth: "720px", margin: "0 auto" }}>
           Upload or paste any Job Description and Candidate Resume. The system automatically uncovers employer requirements, calculates your Job Fit, and launches a dynamic 3-level voice & video mock interview.
         </p>
+
+        {/* AI Status Banner */}
+        {isAiActive ? (
+          <div style={{
+            margin: "18px auto 0",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            background: "rgba(16, 185, 129, 0.08)",
+            border: "1px solid rgba(16, 185, 129, 0.25)",
+            borderRadius: "var(--radius-full)",
+            padding: "5px 16px",
+            fontSize: "0.8rem",
+            color: "#34d399",
+            fontWeight: 600
+          }}>
+            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 6px #10b981" }} />
+            Gemini AI Connected — Real-Time Deep Analysis & Adaptive Interviewing
+          </div>
+        ) : (
+          <div style={{
+            margin: "20px auto 0",
+            maxWidth: "680px",
+            background: "rgba(245, 158, 11, 0.08)",
+            border: "1px solid rgba(245, 158, 11, 0.25)",
+            borderRadius: "var(--radius-md)",
+            padding: "10px 16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+            fontSize: "0.82rem",
+            color: "#fbbf24"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Sparkles size={16} />
+              <span>
+                <strong>Heuristic Fallback:</strong> For 100% dynamic AI generation personalized to this resume, connect your Gemini API key.
+              </span>
+            </div>
+            <button
+              onClick={onOpenSettings}
+              className="btn btn-secondary"
+              style={{ padding: "4px 12px", fontSize: "0.76rem", whiteSpace: "nowrap", borderColor: "rgba(245, 158, 11, 0.4)", color: "#fef3c7" }}
+            >
+              Connect Key
+            </button>
+          </div>
+        )}
 
         {/* Preset Selector */}
         {sampleData && (

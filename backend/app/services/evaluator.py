@@ -348,6 +348,7 @@ async def generate_interview_report(session_id: str, api_key: Optional[str] = No
     cand = session_data["candidate_analysis"]
     turns = state.turns
 
+    active_key = api_key or session_data.get("api_key")
     local_report = compute_local_report(session_id, role, cand, turns)
 
     # If LLM key is available, enrich with LLM insights
@@ -369,7 +370,7 @@ async def generate_interview_report(session_id: str, api_key: Optional[str] = No
         llm_data = await llm_service.generate_json(
             prompt=prompt,
             system_instruction="You are an expert interview evaluator.",
-            api_key=api_key,
+            api_key=active_key,
             provider=provider
         )
         if llm_data and "overall_score" in llm_data and "competency_scores" in llm_data:

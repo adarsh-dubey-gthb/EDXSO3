@@ -15,11 +15,14 @@ import {
   fetchInterviewHistory,
   fetchSavedInterviewSession,
   deleteInterviewHistoryItem,
-  clearAllInterviewHistory
+  clearAllInterviewHistory,
+  getApiKey,
+  fetchHealth
 } from "./services/api";
 
 export default function App() {
   const [currentStep, setStep] = useState("input");
+  const [isAiActive, setIsAiActive] = useState(false);
   
   // Document inputs
   const [jdText, setJdText] = useState("");
@@ -63,6 +66,16 @@ export default function App() {
     }
   };
 
+  const checkAiStatus = async () => {
+    const localKey = getApiKey();
+    if (localKey && localKey.trim().length > 5) {
+      setIsAiActive(true);
+      return;
+    }
+    const health = await fetchHealth();
+    setIsAiActive(Boolean(health.gemini_configured || health.openai_configured));
+  };
+
   // Load sample presets and persistent settings on mount
   useEffect(() => {
     // Load sample templates from backend
@@ -77,6 +90,7 @@ export default function App() {
     if (storedPersona) setPersona(storedPersona);
 
     reloadHistory();
+    checkAiStatus();
   }, []);
 
   const handleLoadSample = (key) => {
@@ -217,6 +231,7 @@ export default function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenHistory={() => setIsHistoryOpen(true)}
         onReset={handleReset}
+        isAiActive={isAiActive}
       />
 
       <main style={{ flex: 1 }}>
@@ -230,6 +245,8 @@ export default function App() {
             isLoading={isLoading}
             sampleData={sampleData}
             onLoadSample={handleLoadSample}
+            isAiActive={isAiActive}
+            onOpenSettings={() => setIsSettingsOpen(true)}
           />
         )}
 
@@ -294,6 +311,7 @@ export default function App() {
         onClose={() => setIsSettingsOpen(false)}
         persona={persona}
         setPersona={setPersona}
+        onSettingsSaved={checkAiStatus}
       />
 
       <HistoryModal

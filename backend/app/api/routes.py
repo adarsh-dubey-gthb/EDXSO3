@@ -121,16 +121,21 @@ async def get_sample_data():
     return SAMPLE_DATA
 
 @router.post("/analyze", response_model=AnalysisResponse)
-async def analyze_role_and_candidate(payload: AnalyzeRequest):
+async def analyze_role_and_candidate(
+    payload: AnalyzeRequest,
+    x_api_key: Optional[str] = Header(None, alias="X-Api-Key")
+):
     """Run Step 1 (Role Analysis) and Step 2 (Candidate Analysis & Job Fit)."""
     if not payload.job_description.strip():
         raise HTTPException(status_code=400, detail="Job description text cannot be empty.")
     if not payload.resume.strip():
         raise HTTPException(status_code=400, detail="Resume text cannot be empty.")
     
+    active_key = payload.api_key or x_api_key
     result = await analyze_documents(
         jd_text=payload.job_description,
         resume_text=payload.resume,
+        api_key=active_key,
         provider=payload.provider or "gemini"
     )
     return result
@@ -138,19 +143,27 @@ async def analyze_role_and_candidate(payload: AnalyzeRequest):
 @router.post("/interview/start")
 async def start_interview(
     payload: StartInterviewRequest,
-    x_user_id: Optional[str] = Header(None, alias="X-User-Id")
+    x_user_id: Optional[str] = Header(None, alias="X-User-Id"),
+    x_api_key: Optional[str] = Header(None, alias="X-Api-Key")
 ):
     """Start an AI Interview Simulator session and return the first personalized screening question."""
     if x_user_id and not payload.user_id:
         payload.user_id = x_user_id
+    if x_api_key and not payload.api_key:
+        payload.api_key = x_api_key
     session_info = await start_interview_session(payload)
     return session_info
 
 @router.post("/interview/respond")
-async def submit_answer(payload: SubmitAnswerRequest):
+async def submit_answer(
+    payload: SubmitAnswerRequest,
+    x_api_key: Optional[str] = Header(None, alias="X-Api-Key")
+):
     """Submit candidate's answer (voice transcript or text), evaluate answer, adaptively return next question."""
     if not payload.answer_text.strip():
         raise HTTPException(status_code=400, detail="Answer text cannot be empty.")
+    if x_api_key and not payload.api_key:
+        payload.api_key = x_api_key
     
     response = await process_candidate_turn(payload)
     return response
@@ -168,11 +181,12 @@ async def finish_interview(session_id: str):
 @router.get("/interview/report/{session_id}", response_model=PerformanceReport)
 async def get_performance_report(
     session_id: str,
-    provider: Optional[str] = Query("gemini")
+    provider: Optional[str] = Query("gemini"),
+    x_api_key: Optional[str] = Header(None, alias="X-Api-Key")
 ):
     """Generate Step 4 Performance Report with overall score, competencies, question feedback, and prep roadmap."""
     try:
-        report = await generate_interview_report(session_id, provider=provider)
+        report = await generate_interview_report(session_id, api_key=x_api_key, provider=provider)
         return report
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -249,5 +263,29 @@ async def clear_history(
 
 @router.get("/health")
 async def health_check():
-    """Health check endpoint."""
-    return {"status": "ok", "service": "Interview Accelerator API"}
+    """Health check endpoint reporting API and AI configuration status."""
+    from app.config import GEMINI_API_KEY, OPENAI_API_KEY
+    return {
+        "status": "ok",
+        "service": "Interview Accelerator API",
+        "gemini_configured": bool(GEMINI_API_KEY and len(GEMINI_API_KEY.strip()) > 5),
+        "openai_configured": bool(OPENAI_API_KEY and len(OPENAI_API_KEY.strip()) > 5)
+    }
+
+@router.post("/test-key")
+async def test_key(
+    payload: Optional[Dict[str, Any]] = None,
+    x_api_key: Optional[str] = Header(None, alias="X-Api-Key")
+):
+    """Test validity of a Gemini API key."""
+    from app.services.llm_service import llm_service
+    from app.config import GEMINI_API_KEY
+    key = (payload.get("api_key") if payload else None) or x_api_key or GEMINI_API_KEY
+    if not key or not key.strip():
+        return {"valid": False, "message": "No API key provided."}
+    
+    clean_key = key.strip()
+    res = await llm_service.generate_content("Ping. Reply 'pong'.", api_key=clean_key, provider="gemini")
+    if res and len(res.strip()) > 0:
+        return {"valid": True, "message": f"Successfully verified Gemini AI! (Response: '{res.strip()[:30]}')"}
+    return {"valid": False, "message": "Could not connect to Gemini API with this key. Check that the key is valid and has the Gemini API enabled."}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Sparkles, Settings, History, RotateCcw, Brain, ShieldCheck } from "lucide-react";
 
-export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHistory, onReset }) {
+export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHistory, onReset, isAiActive }) {
   const steps = [
     { id: "input", label: "1. Inputs" },
     { id: "role", label: "2. Role Analysis" },
@@ -67,7 +67,7 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
           borderRadius: "var(--radius-full)",
           border: "1px solid var(--border-subtle)"
         }}>
-          {steps.map((s, idx) => {
+          {steps.map((s) => {
             const isActive = currentStep === s.id;
             return (
               <button
@@ -93,6 +93,32 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
 
         {/* Action Controls */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          {/* AI Engine Status Badge */}
+          <button
+            onClick={onOpenSettings}
+            className="btn btn-secondary"
+            title={isAiActive ? "Gemini AI Engine Active" : "AI key required for live Gemini generation — click to configure"}
+            style={{
+              padding: "6px 12px",
+              fontSize: "0.8rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              background: isAiActive ? "rgba(16, 185, 129, 0.12)" : "rgba(245, 158, 11, 0.14)",
+              borderColor: isAiActive ? "rgba(16, 185, 129, 0.3)" : "rgba(245, 158, 11, 0.35)",
+              color: isAiActive ? "#34d399" : "#fbbf24"
+            }}
+          >
+            <span style={{
+              width: "7px",
+              height: "7px",
+              borderRadius: "50%",
+              backgroundColor: isAiActive ? "#10b981" : "#f59e0b",
+              boxShadow: isAiActive ? "0 0 8px #10b981" : "0 0 8px #f59e0b"
+            }} />
+            <span className="desktop-only">{isAiActive ? "Gemini AI Active" : "Connect AI Key"}</span>
+          </button>
+
           <button
             className="btn btn-secondary"
             onClick={onOpenHistory}

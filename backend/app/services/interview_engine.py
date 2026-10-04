@@ -253,6 +253,7 @@ async def start_interview_session(req: StartInterviewRequest) -> Dict[str, Any]:
         role=req.role_analysis,
         cand=req.candidate_analysis,
         persona=req.interviewer_persona or "Professional & Rigorous",
+        api_key=req.api_key,
         provider=req.provider
     )
     
@@ -275,7 +276,8 @@ async def start_interview_session(req: StartInterviewRequest) -> Dict[str, Any]:
         "role_analysis": req.role_analysis,
         "candidate_analysis": req.candidate_analysis,
         "job_fit": req.job_fit,
-        "persona": req.interviewer_persona
+        "persona": req.interviewer_persona,
+        "api_key": req.api_key
     }
     
     return {
@@ -297,6 +299,9 @@ async def process_candidate_turn(req: SubmitAnswerRequest) -> Dict[str, Any]:
     role: RoleAnalysis = session_data["role_analysis"]
     cand: CandidateAnalysis = session_data["candidate_analysis"]
     persona: str = session_data.get("persona", "Professional & Rigorous")
+    active_api_key: Optional[str] = req.api_key or session_data.get("api_key")
+    if req.api_key:
+        session_data["api_key"] = req.api_key
     
     current_turn = state.turns[-1]
     current_turn.candidate_answer = req.answer_text
@@ -313,6 +318,7 @@ async def process_candidate_turn(req: SubmitAnswerRequest) -> Dict[str, Any]:
         signals=signals,
         role=role,
         persona=persona,
+        api_key=active_api_key,
         provider=req.provider
     )
     current_turn.evaluation = turn_eval
@@ -361,6 +367,7 @@ async def process_candidate_turn(req: SubmitAnswerRequest) -> Dict[str, Any]:
         last_turn=current_turn,
         next_level=next_level,
         persona=persona,
+        api_key=active_api_key,
         provider=req.provider
     )
 

@@ -10,6 +10,7 @@ class AnalyzeRequest(BaseModel):
     job_description: str
     resume: str
     provider: Optional[str] = "gemini"  # "gemini" or "openai"
+    api_key: Optional[str] = None
 
 # Step 1: Understand the Role
 class RoleAnalysis(BaseModel):
@@ -98,6 +99,7 @@ class StartInterviewRequest(BaseModel):
     interviewer_persona: Optional[str] = "Professional & Rigorous"
     provider: Optional[str] = "gemini"
     user_id: Optional[str] = None
+    api_key: Optional[str] = None
 
 class SubmitAnswerRequest(BaseModel):
     session_id: str
@@ -106,6 +108,7 @@ class SubmitAnswerRequest(BaseModel):
     duration_seconds: Optional[float] = 0.0
     filler_words: Optional[Dict[str, int]] = None
     provider: Optional[str] = "gemini"
+    api_key: Optional[str] = None
 
 # Step 4: Interview Performance Report Schemas
 class QuestionFeedbackItem(BaseModel):
