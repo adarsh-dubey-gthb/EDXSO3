@@ -288,4 +288,6 @@ async def test_key(
     res = await llm_service.generate_content("Ping. Reply 'pong'.", api_key=clean_key, provider="gemini")
     if res and len(res.strip()) > 0:
         return {"valid": True, "message": f"Successfully verified Gemini AI! (Response: '{res.strip()[:30]}')"}
-    return {"valid": False, "message": "Could not connect to Gemini API with this key. Check that the key is valid and has the Gemini API enabled."}
+    err_info = getattr(llm_service, "last_error", "")
+    detail_msg = f" Error: {err_info}" if err_info else ""
+    return {"valid": False, "message": f"Could not connect to Gemini API with this key.{detail_msg}"}

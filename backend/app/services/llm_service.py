@@ -42,7 +42,7 @@ def extract_json_from_text(text: str) -> Dict[str, Any]:
 
 class LLMService:
     def __init__(self):
-        pass
+        self.last_error = ""
 
     async def generate_content(
         self,
@@ -53,14 +53,15 @@ class LLMService:
         temperature: float = 0.4
     ) -> Optional[str]:
         """Call Gemini or OpenAI or fallback gracefully."""
+        self.last_error = ""
         active_gemini_key = api_key if (provider == "gemini" and api_key) else (GEMINI_API_KEY or api_key)
         active_openai_key = api_key if (provider == "openai" and api_key) else (OPENAI_API_KEY or api_key)
 
-        # 1. Try Gemini (New SDK)
+        # 1. Try Gemini (New SDK: google-genai)
         if provider == "gemini" and active_gemini_key and HAVE_NEW_GENAI:
             try:
                 client = genai.Client(api_key=active_gemini_key)
-                models = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.7-flash"]
+                models = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"]
                 for m in models:
                     try:
                         full_prompt = f"{system_instruction}\n\n{prompt}" if system_instruction else prompt
@@ -71,22 +72,31 @@ class LLMService:
                         if response and response.text:
                             return response.text
                     except Exception as me:
+                        self.last_error = f"{m}: {me}"
                         logger.warning(f"Gemini {m} error: {me}")
             except Exception as e:
+                self.last_error = f"genai.Client error: {e}"
                 logger.error(f"Gemini Client error: {e}")
 
-        # 2. Try Gemini (Legacy SDK)
+        # 2. Try Gemini (Legacy SDK: google-generativeai)
         if provider == "gemini" and active_gemini_key and HAVE_OLD_GENAI:
             try:
                 legacy_genai.configure(api_key=active_gemini_key)
-                model = legacy_genai.GenerativeModel(
-                    model_name="gemini-1.5-flash",
-                    system_instruction=system_instruction
-                )
-                res = model.generate_content(prompt)
-                if res and res.text:
-                    return res.text
+                legacy_models = ["gemini-3.1-flash-lite", "gemini-2.5-flash", "gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-pro"]
+                for lm in legacy_models:
+                    try:
+                        model = legacy_genai.GenerativeModel(
+                            model_name=lm,
+                            system_instruction=system_instruction
+                        )
+                        res = model.generate_content(prompt)
+                        if res and res.text:
+                            return res.text
+                    except Exception as me:
+                        self.last_error = f"legacy {lm}: {me}"
+                        logger.warning(f"Legacy Gemini {lm} error: {me}")
             except Exception as e:
+                self.last_error = f"Legacy configure error: {e}"
                 logger.error(f"Legacy Gemini error: {e}")
 
         # 3. Try OpenAI if selected or provided
