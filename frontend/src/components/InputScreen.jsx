@@ -88,19 +88,32 @@ export default function InputScreen({
         {isAiActive ? (
           <div style={{
             margin: "18px auto 0",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
+            maxWidth: "760px",
             background: "rgba(16, 185, 129, 0.08)",
             border: "1px solid rgba(16, 185, 129, 0.25)",
-            borderRadius: "var(--radius-full)",
-            padding: "5px 16px",
-            fontSize: "0.8rem",
+            borderRadius: "var(--radius-md)",
+            padding: "8px 16px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+            fontSize: "0.82rem",
             color: "#34d399",
-            fontWeight: 600
+            lineHeight: 1.45
           }}>
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 6px #10b981" }} />
-            Gemini AI Connected — Real-Time Deep Analysis & Adaptive Interviewing
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", flexShrink: 0 }} />
+              <span>
+                <strong>Free AI Tier Enabled:</strong> Real-time Gemini evaluation is active. If the shared free tier exhausts, simply connect your own Gemini API key in Settings.
+              </span>
+            </div>
+            <button
+              onClick={onOpenSettings}
+              className="btn btn-secondary"
+              style={{ padding: "4px 10px", fontSize: "0.75rem", whiteSpace: "nowrap", borderColor: "rgba(16, 185, 129, 0.35)", color: "#a7f3d0" }}
+            >
+              Settings
+            </button>
           </div>
         ) : (
           <div style={{

@@ -97,7 +97,7 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
           <button
             onClick={onOpenSettings}
             className="btn btn-secondary"
-            title={isAiActive ? "Gemini AI Engine Active" : "AI key required for live Gemini generation — click to configure"}
+            title={isAiActive ? "Free AI Tier Active — If exhausted, connect your personal key in Settings" : "AI key required for live Gemini generation — click to configure"}
             style={{
               padding: "6px 12px",
               fontSize: "0.8rem",
@@ -116,7 +116,7 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
               backgroundColor: isAiActive ? "#10b981" : "#f59e0b",
               boxShadow: isAiActive ? "0 0 8px #10b981" : "0 0 8px #f59e0b"
             }} />
-            <span className="desktop-only">{isAiActive ? "Gemini AI Active" : "Connect AI Key"}</span>
+            <span className="desktop-only">{isAiActive ? "Free AI Tier Active" : "Connect AI Key"}</span>
           </button>
 
           <button

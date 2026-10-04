@@ -96,6 +96,26 @@ export default function SettingsModal({
           </button>
         </div>
 
+        {/* Free Tier Info Card */}
+        <div style={{
+          background: "rgba(16, 185, 129, 0.08)",
+          border: "1px solid rgba(16, 185, 129, 0.25)",
+          borderRadius: "var(--radius-md)",
+          padding: "12px 14px",
+          marginBottom: "18px",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "10px",
+          fontSize: "0.82rem",
+          color: "#34d399",
+          lineHeight: 1.5
+        }}>
+          <Sparkles size={18} style={{ flexShrink: 0, marginTop: "2px", color: "#10b981" }} />
+          <div>
+            <strong>Free AI Tier Already Enabled:</strong> The system is pre-configured with a complimentary AI tier for all users. If high usage exhausts the free tier quota, simply paste your own free Gemini API key below to continue uninterrupted.
+          </div>
+        </div>
+
         {/* Gemini API Key Input */}
         <div style={{ marginBottom: "22px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
