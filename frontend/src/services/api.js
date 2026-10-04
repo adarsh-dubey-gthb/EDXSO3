@@ -1,8 +1,22 @@
-const API_BASE = import.meta.env.VITE_API_BASE || (
-  typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? "http://127.0.0.1:8000/api"
-    : "/api"
-);
+function getApiBase() {
+  if (import.meta.env.VITE_API_BASE) {
+    return import.meta.env.VITE_API_BASE.replace(/\/+$/, "");
+  }
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "http://127.0.0.1:8000/api";
+    }
+    // Automatically detect Render backend when deployed on onrender.com
+    if (host.includes("onrender.com")) {
+      const backendHost = host.replace("-frontend", "-backend");
+      return `https://${backendHost}/api`;
+    }
+  }
+  return "/api";
+}
+
+const API_BASE = getApiBase();
 
 export function getUserId() {
   let uid = localStorage.getItem("interview_accelerator_user_id");
