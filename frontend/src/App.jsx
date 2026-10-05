@@ -7,6 +7,7 @@ import InterviewRoomScreen from "./components/InterviewRoomScreen";
 import PerformanceReportScreen from "./components/PerformanceReportScreen";
 import SettingsModal from "./components/SettingsModal";
 import HistoryModal from "./components/HistoryModal";
+import RecruiterModal from "./components/RecruiterModal";
 import {
   fetchSampleData,
   analyzeRoleAndResume,
@@ -45,9 +46,9 @@ export default function App() {
   const [provider, setProvider] = useState("gemini");
   const [persona, setPersona] = useState("Professional & Rigorous");
 
-  // Modals & History
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isRecruiterOpen, setIsRecruiterOpen] = useState(false);
   const [historyList, setHistoryList] = useState([]);
 
   const reloadHistory = async () => {
@@ -230,6 +231,7 @@ export default function App() {
         setStep={setStep}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onOpenHistory={() => setIsHistoryOpen(true)}
+        onOpenRecruiter={() => setIsRecruiterOpen(true)}
         onReset={handleReset}
         isAiActive={isAiActive}
       />
@@ -282,8 +284,11 @@ export default function App() {
         {currentStep === "report" && (
           <PerformanceReportScreen
             report={report}
+            roleData={roleData}
+            candidateData={candidateData}
             onRestart={handleReset}
             onSaveHistory={handleSaveHistory}
+            onLaunchFollowUp={handleStartInterview}
           />
         )}
       </main>
@@ -321,6 +326,13 @@ export default function App() {
         onLoadReport={handleLoadReport}
         onDeleteHistoryItem={handleDeleteHistoryItem}
         onClearHistory={handleClearHistory}
+      />
+
+      <RecruiterModal
+        isOpen={isRecruiterOpen}
+        onClose={() => setIsRecruiterOpen(false)}
+        historyList={historyList}
+        onLoadReport={handleLoadReport}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
-import { Sparkles, Settings, History, RotateCcw, Brain, ShieldCheck } from "lucide-react";
+import { Sparkles, Settings, History, RotateCcw, Brain, ShieldCheck, Users } from "lucide-react";
 
-export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHistory, onReset, isAiActive }) {
+export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHistory, onOpenRecruiter, onReset, isAiActive }) {
   const steps = [
     { id: "input", label: "1. Inputs" },
     { id: "role", label: "2. Role Analysis" },
@@ -128,6 +128,18 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
             <History size={16} />
             <span className="desktop-only">History</span>
           </button>
+
+          {onOpenRecruiter && (
+            <button
+              className="btn btn-secondary"
+              onClick={onOpenRecruiter}
+              title="Recruiter & Pipeline Dashboard"
+              style={{ padding: "8px 12px", fontSize: "0.85rem", color: "#93c5fd", borderColor: "rgba(147, 197, 253, 0.3)" }}
+            >
+              <Users size={16} />
+              <span className="desktop-only">Recruiter View</span>
+            </button>
+          )}
 
           <button
             className="btn btn-secondary"

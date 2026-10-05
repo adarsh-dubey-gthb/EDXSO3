@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Mic, MicOff, Video, VideoOff, Volume2, VolumeX, Sparkles,
   Play, Square, Send, AlertCircle, CheckCircle2, ChevronRight,
-  TrendingUp, Award, Clock, ArrowRight, RefreshCw, Bot, User, Gauge
+  TrendingUp, Award, Clock, ArrowRight, RefreshCw, Bot, User, Gauge, Code2
 } from "lucide-react";
 import { voiceManager } from "../services/speech";
 import { submitInterviewAnswer, finishInterviewSession, transcribeAudioFile } from "../services/api";
@@ -32,6 +32,21 @@ export default function InterviewRoomScreen({
   const [audioLevel, setAudioLevel] = useState(0);
   const [isTranscribingAI, setIsTranscribingAI] = useState(false);
   const [lastAudioBlob, setLastAudioBlob] = useState(null);
+  const [responseMode, setResponseMode] = useState("voice"); // "voice" | "code"
+  const [codeLanguage, setCodeLanguage] = useState("python");
+  const [codeContent, setCodeContent] = useState(
+`# Write or paste technical code / algorithms / schemas here
+def solution():
+    # Implement algorithm or system component
+    pass`
+  );
+
+  const handleAttachCodeToTranscript = () => {
+    if (!codeContent.trim()) return;
+    const formattedCode = `\n\`\`\`${codeLanguage}\n${codeContent.trim()}\n\`\`\`\n`;
+    setCandidateTranscript(prev => (prev ? prev.trim() + "\n" + formattedCode : formattedCode));
+    setResponseMode("voice");
+  };
 
   // Live Speech Telemetry
   const [liveWpm, setLiveWpm] = useState(0);
@@ -635,6 +650,98 @@ export default function InterviewRoomScreen({
               }}>
                 <Sparkles size={15} color="#818cf8" />
                 <span>Transcribing audio with Gemini Multimodal AI for technical precision...</span>
+              </div>
+            )}
+
+            {/* Mode Switcher: Voice/Spoken vs Coding Workspace */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
+              <div style={{ display: "flex", gap: "6px" }}>
+                <button
+                  type="button"
+                  onClick={() => setResponseMode("voice")}
+                  style={{
+                    background: responseMode === "voice" ? "rgba(99, 102, 241, 0.25)" : "transparent",
+                    color: responseMode === "voice" ? "#ffffff" : "var(--text-dim)",
+                    border: "1px solid",
+                    borderColor: responseMode === "voice" ? "rgba(99, 102, 241, 0.45)" : "var(--border-subtle)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: "4px 10px",
+                    fontSize: "0.76rem",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    fontWeight: 600
+                  }}
+                >
+                  <Mic size={12} /> Spoken & Written Answer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setResponseMode("code")}
+                  style={{
+                    background: responseMode === "code" ? "rgba(99, 102, 241, 0.25)" : "transparent",
+                    color: responseMode === "code" ? "#ffffff" : "var(--text-dim)",
+                    border: "1px solid",
+                    borderColor: responseMode === "code" ? "rgba(99, 102, 241, 0.45)" : "var(--border-subtle)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: "4px 10px",
+                    fontSize: "0.76rem",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    fontWeight: 600
+                  }}
+                >
+                  <Code2 size={12} /> 💻 Coding / Technical Mode
+                </button>
+              </div>
+
+              {responseMode === "code" && (
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span style={{ fontSize: "0.72rem", color: "var(--text-dim)" }}>Language:</span>
+                  <select
+                    value={codeLanguage}
+                    onChange={(e) => setCodeLanguage(e.target.value)}
+                    className="textarea-custom"
+                    style={{ height: "28px", padding: "2px 8px", fontSize: "0.75rem", width: "110px" }}
+                  >
+                    <option value="python">Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="sql">SQL</option>
+                    <option value="go">Go</option>
+                    <option value="java">Java</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {/* Code Workspace Editor Panel */}
+            {responseMode === "code" && (
+              <div style={{ marginBottom: "12px", background: "rgba(15, 21, 35, 0.95)", border: "1px solid rgba(99, 102, 241, 0.3)", borderRadius: "var(--radius-md)", padding: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+                  <span style={{ fontSize: "0.74rem", color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
+                    Code Editor ({codeLanguage})
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleAttachCodeToTranscript}
+                    className="btn btn-primary"
+                    style={{ padding: "4px 12px", fontSize: "0.74rem" }}
+                  >
+                    Attach Code to Answer & Return
+                  </button>
+                </div>
+                <textarea
+                  className="textarea-custom"
+                  rows={6}
+                  value={codeContent}
+                  onChange={(e) => setCodeContent(e.target.value)}
+                  placeholder="Write algorithm, architecture schema, or SQL query here..."
+                  style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", background: "rgba(10, 14, 23, 0.95)", color: "#a5b4fc" }}
+                />
               </div>
             )}
 

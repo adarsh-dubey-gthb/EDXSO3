@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { X, Sliders, Check, UserCheck, Key, Sparkles, CheckCircle2, AlertCircle, ExternalLink, Trash2 } from "lucide-react";
+import { X, Sliders, Check, UserCheck, Key, Sparkles, CheckCircle2, AlertCircle, ExternalLink, Trash2, Building2 } from "lucide-react";
 import { getApiKey, setApiKey as saveApiKey, testApiKey } from "../services/api";
 
 export default function SettingsModal({
@@ -13,6 +13,9 @@ export default function SettingsModal({
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState(null);
   const [savedNotice, setSavedNotice] = useState(false);
+  const [industryMode, setIndustryMode] = useState(() => {
+    return localStorage.getItem("interview_accelerator_industry_mode") || "General Technology (Standard Balanced)";
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -187,7 +190,7 @@ export default function SettingsModal({
         </div>
 
         {/* Persona Select */}
-        <div style={{ marginBottom: "22px" }}>
+        <div style={{ marginBottom: "20px" }}>
           <label style={{ display: "block", fontSize: "0.86rem", fontWeight: 600, color: "var(--text-muted)", marginBottom: "8px" }}>
             <UserCheck size={14} style={{ display: "inline", marginRight: "6px" }} />
             Interviewer Persona & Style
@@ -204,6 +207,32 @@ export default function SettingsModal({
           </select>
           <p style={{ fontSize: "0.78rem", color: "var(--text-dim)", marginTop: "6px" }}>
             Controls the AI interviewer's questioning tone, challenge depth, and behavioral evaluation strictness.
+          </p>
+        </div>
+
+        {/* Industry-Specific Interview Focus Mode (Bonus Feature) */}
+        <div style={{ marginBottom: "22px" }}>
+          <label style={{ display: "block", fontSize: "0.86rem", fontWeight: 600, color: "var(--text-muted)", marginBottom: "8px" }}>
+            <Building2 size={14} style={{ display: "inline", marginRight: "6px" }} />
+            Industry Interview Focus Mode
+          </label>
+          <select
+            value={industryMode}
+            onChange={(e) => {
+              setIndustryMode(e.target.value);
+              localStorage.setItem("interview_accelerator_industry_mode", e.target.value);
+            }}
+            className="textarea-custom"
+            style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)" }}
+          >
+            <option value="General Technology (Standard Balanced)">General Technology (Standard Balanced)</option>
+            <option value="Big Tech / FAANG (Scale & Architecture)">Big Tech / FAANG (Distributed Systems, Scalability & Architecture)</option>
+            <option value="HFT & Fintech (Low Latency & Reliability)">HFT & Fintech (Low Latency, Concurrency & Data Consistency)</option>
+            <option value="Enterprise & Cloud Security (Compliance & Zero Trust)">Enterprise & Cloud Security (Zero Trust & Reliability)</option>
+            <option value="Early-Stage Startup (Velocity & Pragmatism)">Early-Stage Startup (Speed, Pragmatism & Full-Stack MVP)</option>
+          </select>
+          <p style={{ fontSize: "0.78rem", color: "var(--text-dim)", marginTop: "6px" }}>
+            Calibrates question emphasis towards real-world engineering standards and company archetypes.
           </p>
         </div>
 

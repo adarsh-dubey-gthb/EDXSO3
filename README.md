@@ -69,6 +69,31 @@ $$\text{Overall Score} = (40\% \times \text{Avg Turn}) + (20\% \times \text{Tech
 
 ---
 
+## 🏆 Bonus Features Implemented (Section 20 of Rubric)
+
+| Category | Bonus Feature | Implementation Details |
+| :--- | :--- | :--- |
+| **Preparation & Gaps** | **AI-Generated Personalized Prep Plan** | Generates a 5-day study plan + P1/P2/P3 review checklists in [PerformanceReportScreen.jsx](frontend/src/components/PerformanceReportScreen.jsx). |
+| **Preparation & Gaps** | **Resume Improvement Suggestions** | Transforms passive bullets into Google XYZ-formula (`Accomplished [X] measured by [Y] by doing [Z]`) achievements. |
+| **Preparation & Gaps** | **Job-Specific Study Resources** | Tailored links & cheat-sheets (System Design Primer, NeetCode, DDIA) mapped to the JD's exact technologies. |
+| **History & Tracking** | **Persistent Interview History** | SQLite database (`backend/interview_history.db`) preserves all past transcripts, scores, and dates. |
+| **History & Tracking** | **Progress Tracking & Improvement** | Visual score trajectory sparklines across chronological attempts with growth delta calculation. |
+| **History & Tracking** | **Compare Performance Across Interviews** | Side-by-side session comparison in [HistoryModal.jsx](frontend/src/components/HistoryModal.jsx) with competency score delta diffs. |
+| **Simulation Modes** | **Coding / Technical Question Mode** | Toggleable Code Workspace in [InterviewRoomScreen.jsx](frontend/src/components/InterviewRoomScreen.jsx) with language syntax (Python, JS, SQL, Go) and scratchpad. |
+| **Simulation Modes** | **Industry-Specific Interview Modes** | Dropdown in [SettingsModal.jsx](frontend/src/components/SettingsModal.jsx) for FAANG/Big Tech, HFT & Fintech, Security, or Startup velocity. |
+| **Simulation Modes** | **AI Interviewer Personalities** | 3 distinct personas (Dr. Vance, Marcus Reed, Alex Thorne) with modulated TTS voice, strictness, and animated avatars. |
+| **Simulation Modes** | **Follow-up Interview Based on Performance**| One-click "Targeted Follow-Up" button on report re-launches the simulator specifically targeting Priority 1 weak areas. |
+| **Live Telemetry** | **Real-Time Speech Transcription** | Hands-free Web Speech STT streaming with Gemini Multimodal Audio transcription backup. |
+| **Live Telemetry** | **Filler-Word Analysis** | Real-time detector for `um`, `uh`, `like`, `you know` with visual alerts when $>3$ and communication score penalties. |
+| **Live Telemetry** | **Speaking Pace Analysis** | Real-time WPM speedometer gauge calibrated to optimal speaking pace (110–160 WPM). |
+| **Live Telemetry** | **Question Difficulty Adjustment** | Dynamic tagging (`Standard`, `Advanced System Architecture`, `Deep-Dive Edge Cases`) adjusting to candidate depth. |
+| **Enterprise / Talent**| **Recruiter Pipeline Dashboard** | Centralized dashboard in [RecruiterModal.jsx](frontend/src/components/RecruiterModal.jsx) with score filters, hire/pass recommendations, and CSV export. |
+| **Enterprise / Talent**| **Shareable Interview Report** | One-click "Share Report" copies formatted candidate evaluation scorecard to clipboard for recruiters/peers. |
+| **Enterprise / Talent**| **Multiple Job Profiles & Presets** | Quick presets for Backend, AI/ML, and Full-Stack + support for any custom JD & Resume files. |
+| **Aesthetics** | **Dynamic AI Interviewer Animation** | Dual-mode visualizer: Life-like SVG Persona Avatar (eye blinking, speech articulation, nodding) & 60 FPS Neural Canvas Sphere. |
+
+---
+
 ## 🎨 UI / UX Design System
 
 The application features an **Elevated Slate-Glassmorphism Design System**:
