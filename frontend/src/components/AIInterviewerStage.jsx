@@ -136,20 +136,20 @@ export default function AIInterviewerStage({
       // 1. Cyber Ambient Background & Grid
       const bgGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, Math.max(width, height) / 1.5);
       if (isSpeakingAI) {
-        bgGrad.addColorStop(0, "rgba(99, 102, 241, 0.22)");
-        bgGrad.addColorStop(0.5, "rgba(79, 70, 229, 0.08)");
-        bgGrad.addColorStop(1, "rgba(10, 14, 23, 0.95)");
+        bgGrad.addColorStop(0, "rgba(99, 102, 241, 0.28)");
+        bgGrad.addColorStop(0.5, "rgba(79, 70, 229, 0.12)");
+        bgGrad.addColorStop(1, "rgba(15, 22, 38, 0.96)");
       } else if (isListeningCandidate) {
-        bgGrad.addColorStop(0, "rgba(16, 185, 129, 0.22)");
-        bgGrad.addColorStop(0.5, "rgba(5, 150, 105, 0.08)");
-        bgGrad.addColorStop(1, "rgba(10, 14, 23, 0.95)");
+        bgGrad.addColorStop(0, "rgba(16, 185, 129, 0.28)");
+        bgGrad.addColorStop(0.5, "rgba(5, 150, 105, 0.12)");
+        bgGrad.addColorStop(1, "rgba(15, 22, 38, 0.96)");
       } else if (isSubmitting || isTranscribingAI) {
-        bgGrad.addColorStop(0, "rgba(245, 158, 11, 0.22)");
-        bgGrad.addColorStop(0.5, "rgba(217, 119, 6, 0.08)");
-        bgGrad.addColorStop(1, "rgba(10, 14, 23, 0.95)");
+        bgGrad.addColorStop(0, "rgba(245, 158, 11, 0.28)");
+        bgGrad.addColorStop(0.5, "rgba(217, 119, 6, 0.12)");
+        bgGrad.addColorStop(1, "rgba(15, 22, 38, 0.96)");
       } else {
-        bgGrad.addColorStop(0, "rgba(30, 41, 59, 0.3)");
-        bgGrad.addColorStop(1, "rgba(10, 14, 23, 0.95)");
+        bgGrad.addColorStop(0, "rgba(40, 53, 80, 0.35)");
+        bgGrad.addColorStop(1, "rgba(15, 22, 38, 0.96)");
       }
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
@@ -338,7 +338,7 @@ export default function AIInterviewerStage({
         width: "100%",
         minHeight: "260px",
         height: "260px",
-        background: "linear-gradient(180deg, rgba(14, 18, 27, 0.95) 0%, rgba(10, 14, 23, 0.98) 100%)",
+        background: "linear-gradient(180deg, rgba(20, 27, 45, 0.95) 0%, rgba(15, 22, 38, 0.98) 100%)",
         border: "1px solid var(--border-subtle)",
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
@@ -372,7 +372,7 @@ export default function AIInterviewerStage({
             display: "flex",
             alignItems: "center",
             gap: "7px",
-            background: "rgba(10, 14, 23, 0.82)",
+            background: "rgba(18, 26, 44, 0.88)",
             backdropFilter: "blur(8px)",
             padding: "5px 12px",
             borderRadius: "var(--radius-full)",
@@ -414,7 +414,7 @@ export default function AIInterviewerStage({
           <div
             style={{
               display: "flex",
-              background: "rgba(10, 14, 23, 0.82)",
+              background: "rgba(18, 26, 44, 0.88)",
               backdropFilter: "blur(8px)",
               padding: "2px",
               borderRadius: "var(--radius-full)",
@@ -488,7 +488,7 @@ export default function AIInterviewerStage({
               alignItems: "center",
               justifyContent: "center",
               position: "relative",
-              background: "radial-gradient(circle at 50% 40%, rgba(30, 41, 59, 0.5) 0%, rgba(10, 14, 23, 0.95) 75%)"
+              background: "radial-gradient(circle at 50% 40%, rgba(42, 56, 82, 0.6) 0%, rgba(16, 23, 39, 0.96) 75%)"
             }}
           >
             {/* Background Holographic Studio Aura */}
@@ -791,7 +791,7 @@ export default function AIInterviewerStage({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "rgba(10, 14, 23, 0.88)",
+          background: "rgba(18, 26, 44, 0.92)",
           backdropFilter: "blur(10px)",
           padding: "6px 14px",
           borderRadius: "var(--radius-full)",

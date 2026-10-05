@@ -186,7 +186,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {candidateData.potential_resume_claims.map((claim, idx) => (
             <div key={idx} style={{
-              background: "rgba(10, 14, 23, 0.6)",
+              background: "rgba(18, 26, 44, 0.75)",
               padding: "12px 16px",
               borderRadius: "var(--radius-md)",
               fontSize: "0.9rem",

@@ -139,7 +139,7 @@ export default function SettingsModal({
               onChange={(e) => setApiKeyInput(e.target.value)}
               placeholder="Paste your Gemini API key (e.g. AIzaSy...)"
               className="textarea-custom"
-              style={{ height: "42px", padding: "8px 12px", background: "rgba(10, 14, 23, 0.9)", flex: 1, fontFamily: "monospace", fontSize: "0.85rem" }}
+              style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)", flex: 1, fontFamily: "monospace", fontSize: "0.85rem" }}
             />
             {apiKeyInput && (
               <button
@@ -196,7 +196,7 @@ export default function SettingsModal({
             value={persona}
             onChange={(e) => setPersona(e.target.value)}
             className="textarea-custom"
-            style={{ height: "42px", padding: "8px 12px", background: "rgba(10, 14, 23, 0.9)" }}
+            style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)" }}
           >
             <option value="Professional & Rigorous">Professional & Rigorous (Standard Senior Technical Lead)</option>
             <option value="Supportive Coach">Supportive Coach (Encouraging, guiding on fundamentals)</option>

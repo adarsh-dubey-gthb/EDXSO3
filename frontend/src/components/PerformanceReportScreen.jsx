@@ -269,7 +269,7 @@ export default function PerformanceReportScreen({ report, onRestart, onSaveHisto
               </div>
 
               {/* Candidate Spoken Answer */}
-              <div style={{ marginBottom: "16px", padding: "12px 16px", background: "rgba(10, 14, 23, 0.7)", borderRadius: "var(--radius-md)", borderLeft: "3px solid #6366f1" }}>
+              <div style={{ marginBottom: "16px", padding: "12px 16px", background: "rgba(18, 26, 44, 0.85)", borderRadius: "var(--radius-md)", borderLeft: "3px solid #818cf8" }}>
                 <div style={{ fontSize: "0.76rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700, marginBottom: "4px" }}>
                   Your Spoken Answer
                 </div>

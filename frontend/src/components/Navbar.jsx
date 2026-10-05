@@ -13,7 +13,7 @@ export default function Navbar({ currentStep, setStep, onOpenSettings, onOpenHis
   return (
     <header className="no-print" style={{
       borderBottom: "1px solid var(--border-subtle)",
-      background: "rgba(10, 14, 23, 0.85)",
+      background: "rgba(15, 21, 35, 0.88)",
       backdropFilter: "blur(16px)",
       position: "sticky",
       top: 0,
