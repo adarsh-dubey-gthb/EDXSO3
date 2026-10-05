@@ -1,202 +1,387 @@
-# EDXSO3 — AI-Powered Interview Accelerator (Assignment 3)
+# ⚡ Interview Accelerator — Next-Gen AI Technical & Behavioral Interview Simulator
 
-> **Live Production Deployment**:
-> - 🌐 **Web Application**: [https://interview-accelerator-frontend.onrender.com](https://interview-accelerator-frontend.onrender.com)
-> - ⚡ **Backend API**: [https://interview-accelerator-backend.onrender.com](https://interview-accelerator-backend.onrender.com)
-> - 🩺 **Health Check**: [https://interview-accelerator-backend.onrender.com/health](https://interview-accelerator-backend.onrender.com/health)
+<div align="center">
 
----
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-Flash%202.5-8E75C2.svg?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
+[![Render](https://img.shields.io/badge/Render-Deployed%20Live-46E3B7.svg?style=for-the-badge&logo=render&logoColor=black)](https://render.com)
 
-## 🚀 Overview
+**An enterprise-grade mock interview simulator that transforms Job Descriptions & Resumes into calibrated technical interviews, featuring live voice AI, an animated interactive interviewer, adaptive counter-questioning, real-time speech telemetry, and actionable diagnostic scoring.**
 
-The **AI Interview Accelerator** is a high-performance, full-stack platform designed to prepare candidates for real-world technical and behavioral interviews. Unlike static questionnaire apps or canned interview tools, this platform combines **dynamic document understanding**, **real-time voice & video streaming**, an **interactive animated AI interviewer**, and a **rigorous multi-dimensional evaluation engine**.
+[Explore Live Web App](https://interview-accelerator-frontend.onrender.com) • [Backend API Service](https://interview-accelerator-backend.onrender.com) • [API Health Status](https://interview-accelerator-backend.onrender.com/health)
 
-### 🌟 Key Capabilities
-1. **Dynamic Role Deconstruction**: Ingests any custom Job Description (JD) and extracts core responsibilities, required skills, preferred qualifications, and organizational competencies.
-2. **Candidate Calibrated Fit**: Analyzes candidate resumes against the JD, extracts real projects, highlights verified competencies, flags unverified metric claims for interview probing, and calculates a mathematically grounded **Job Fit Score**.
-3. **3-Level Adaptive Interview Simulation**:
-   - **Level 1 — Screening Interview**: Explores ownership, architectural decisions, and projects cited directly from the candidate's resume.
-   - **Level 2 — Competency Interview**: Evaluates domain engineering, concurrency, error recovery, and system scalability.
-   - **Level 3 — Deep-Dive Probing**: Actively identifies vague explanations or unverified resume claims, launching dynamic counter-questions with rigorous trade-off probing.
-4. **Interactive Animated AI Interviewer Stage**:
-   - **Dual-Mode Visualizer**: Toggle between **Digital Persona Avatar** (humanoid AI interviewer with life-like blinking, speech mouth articulation, attentive listening nodding, and persona styling) and **Audio-Reactive Neural Core** (60 FPS HTML5 Canvas with 3D rotating orbital rings, quantum glowing core, floating particle physics, and live voice-frequency ribbon).
-   - **Interviewer Personas**: Choose from **Dr. Evelyn Vance** (Senior Bar Raiser), **Marcus Reed** (Technical Mentor), or **Alex Thorne** (Principal Distributed Systems Architect).
-5. **Real-Time Voice, Video & Speech Telemetry**:
-   - **Voice AI**: Hands-free / push-to-talk speech-to-text (STT), natural voice text-to-speech (TTS), and audio replay controls.
-   - **Speech Telemetry**: Real-time speaking pace (WPM), filler word detection (`um`, `uh`, `like`, `you know`), response duration, and confidence indexing.
-   - **Multimodal AI Audio Transcription**: Fallback to Google Gemini Multimodal Audio transcription for complex technical terms.
-   - **WebCam Integration**: Real-time video mirror feed with one-click camera toggle.
-6. **Comprehensive Performance Report**:
-   - Overall Score gauge (0–100) and Readiness Assessment (🟢 Strong Candidate / 🟡 Interview Ready / 🟠 Needs Preparation / 🔴 Not Ready).
-   - 7 Competency Breakdown scores (Role Fit, Technical Knowledge, Problem Solving, Communication, Confidence, Depth of Understanding, Behavioural Fit).
-   - Question-by-Question actionable critique: *What was good*, *What could be better*, and *Ideal architectural direction*.
-   - Skill-specific Prioritized Preparation Gaps (P1, P2, P3) and a personalized **5-Day Study Schedule**.
-   - Persistent SQLite history database and print-ready PDF export.
+</div>
 
 ---
 
-## 🛠️ Technology Stack
+## 📌 Table of Contents
+1. [Live Production Deployments](#-live-production-deployments)
+2. [Executive Architecture](#-executive-architecture)
+3. [AI / LLM Approach & Prompt Pipeline](#-ai--llm-approach--prompt-pipeline)
+4. [Voice AI & Multimodal Implementation](#-voice-ai--multimodal-implementation)
+5. [Dynamic Questioning & Adaptive Logic](#-dynamic-questioning--adaptive-logic)
+6. [Evaluation & Scoring Methodology](#-evaluation--scoring-methodology)
+7. [Key Technical Decisions & Trade-Offs](#-key-technical-decisions--trade-offs)
+8. [Comprehensive Bonus Features Matrix](#-comprehensive-bonus-features-matrix)
+9. [UI / UX Design System (Light & Dark Dual Mode)](#-ui--ux-design-system)
+10. [Local Development & Quickstart](#-local-development--quickstart)
+11. [REST API Specification](#-rest-api-specification)
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Backend** | **FastAPI** (Python 3.12), **Pydantic v2**, **Uvicorn**, **SQLite3** (WAL Mode), **PyPDF**, **python-docx**, **Google GenAI SDK** (`google-genai`), **HTTPX** |
-| **Frontend** | **React 19**, **Vite 8**, **Vanilla CSS** (Elevated Slate-Glassmorphism design tokens, Outfit & Plus Jakarta Sans typography, GPU micro-animations), **Lucide Icons**, **Canvas Confetti** |
-| **AI / LLM** | **Google Gemini** (`gemini-3.1-flash-lite`, `gemini-3.5-flash-lite`, `gemini-flash-latest`), **OpenAI** (`gpt-4o-mini`), and **100% Offline Dynamic Heuristic Fallback Engine** |
-| **Speech & Media** | **Web Speech Synthesis API** (TTS), **Web Speech Recognition API** (STT), **WebRTC MediaStream API**, **Gemini Audio STT** |
-| **Deployment** | **Render Cloud** (Native Python 3.12 Web Service + Static Node/Vite Client with CORS & health monitoring) |
+---
+
+## 🌐 Live Production Deployments
+
+The application is deployed live in production on Render's globally distributed cloud:
+
+| Service | Environment | Live URL | Description |
+| :--- | :--- | :--- | :--- |
+| **Frontend Web Client** | Node / Vite Static | [https://interview-accelerator-frontend.onrender.com](https://interview-accelerator-frontend.onrender.com) | Responsive React SPA with dual light/dark mode and voice streaming |
+| **Backend REST API** | Python 3.12 Web Service | [https://interview-accelerator-backend.onrender.com](https://interview-accelerator-backend.onrender.com) | FastAPI asynchronous server with document parsers & LLM engine |
+| **System Health Check** | JSON Endpoint | [https://interview-accelerator-backend.onrender.com/health](https://interview-accelerator-backend.onrender.com/health) | Real-time monitoring of Gemini & database connections |
+
+> **Free AI Tier Pre-Activated**: The live deployment is pre-configured with a backend Google Gemini API key. If the shared free tier quota is exhausted, users can seamlessly supply their personal Gemini API key in the in-app **Settings Modal** (stored securely in browser `localStorage`).
+
+---
+
+## 🏛️ Executive Architecture
+
+The system utilizes a decoupled, high-throughput client-server architecture designed for sub-second user responses and resilient offline operation.
+
+```mermaid
+flowchart TB
+    subgraph ClientLayer["🖥️ Frontend Client Layer (React 19 + Vite 8)"]
+        UI["Modern Executive UI (Dual Light/Dark Mode)"]
+        STT["Web Speech Recognition API (Real-Time STT)"]
+        TTS["Web SpeechSynthesis API (Persona TTS)"]
+        WebRTC["WebCam Video Stream (MediaStream API)"]
+        Telemetry["Telemetry Engine (WPM, Fillers, Duration)"]
+        CodeEditor["Multi-Language Coding Workspace (JS, Py, SQL, Go)"]
+        Stage["Animated AI Interviewer Stage (SVG Avatar + Neural Canvas)"]
+    end
+
+    subgraph APILayer["⚡ FastAPI Gateway & Routing Layer"]
+        CORS["CORS Middleware & Security Headers"]
+        Parser["Multi-Format Document Parser (PyPDF, docx, txt)"]
+        Router["REST Endpoint Routers (/api/*)"]
+    end
+
+    subgraph CoreEngine["🧠 Core Orchestration & Business Logic"]
+        RoleEngine["Role Decomposition & Requirement Extractor"]
+        FitEngine["Job Fit Scoring & Flagged Claims Analyzer"]
+        InterviewMgr["3-Level Adaptive Interview State Manager"]
+        Evaluator["Comprehensive Evaluation & Diagnostic Synthesizer"]
+        StudyPlanner["Google XYZ Resume Enhancer & 5-Day Study Planner"]
+    end
+
+    subgraph LLMLayer["🤖 AI Intelligence Layer"]
+        GeminiFlash["Google Gemini 2.5 Flash / 1.5 Flash"]
+        BYOK["Client BYOK Engine (Custom Header: x-gemini-key)"]
+        HeuristicFallback["100% Deterministic Fallback Rules Engine"]
+        AudioTranscriber["Gemini Multimodal Audio Transcriber"]
+    end
+
+    subgraph DataLayer["💾 Persistence & State Management Layer"]
+        SQLiteDB[("SQLite 3 Database (WAL Mode)\nPersistent Sessions, Transcripts & Reports")]
+        ClientStorage[("Browser LocalStorage\nTheme Preferences, Personas & API Keys")]
+    end
+
+    %% Flow connections
+    ClientLayer <-->|JSON REST Requests & x-gemini-key| APILayer
+    APILayer --> Parser
+    APILayer --> CoreEngine
+    CoreEngine <-->|Structured Prompts & JSON Schema| LLMLayer
+    LLMLayer -.->|Rate Limit / Quota Exception| HeuristicFallback
+    CoreEngine <-->|SQLAlchemy ORM Queries| SQLiteDB
+    ClientLayer <-->|Offline Preferences| ClientStorage
+```
+
+---
+
+## 🤖 AI / LLM Approach & Prompt Pipeline
+
+The platform uses a **contract-driven, structured LLM execution pipeline** designed to eliminate hallucinations, enforce type safety, and guarantee zero crashes.
+
+```mermaid
+flowchart LR
+    A["Raw Job Description\n& Candidate Resume"] --> B["Document Ingestion\n& Normalization"]
+    B --> C["Prompt Synthesis\nwith Strict JSON Schema"]
+    C --> D{"LLM Provider"}
+    D -->|"Primary: Server Key"| E["Google Gemini API\n(gemini-2.5-flash)"]
+    D -->|"Secondary: User Key"| F["Client BYOK Header\n(x-gemini-key)"]
+    D -->|"Quota Exhausted"| G["Heuristic Rules\nFallback Pipeline"]
+    E --> H["Raw LLM String Output"]
+    F --> H
+    G --> K["Validated Pydantic DTO"]
+    H --> I["Regex Boundary\nMarkdown Extractor"]
+    I --> J["JSON Deserialization\n& Schema Validation"]
+    J --> K
+    K --> L["State Machine Update\n& UI Dispatch"]
+```
+
+### Key AI/LLM Design Principles:
+1. **Pydantic Schema Enforcement**: Every prompt includes a strict JSON schema contract. LLM output is parsed, stripped of Markdown wrappers (````json ... ````), and validated into Pydantic models ([schemas.py](backend/app/models/schemas.py)).
+2. **Dual-Tier AI Access**:
+   * *Shared Free Tier*: Out-of-the-box live AI evaluations funded by the backend.
+   * *BYOK (Bring Your Own Key)*: Instant client-side switching to the user's personal Gemini key without backend redeployment.
+3. **Resilient Fallback Safety Net**: If network connectivity drops or the Gemini free quota is exceeded, the internal [Heuristic Fallback Engine](backend/app/services/llm_service.py) takes over seamlessly, generating relevant, mathematically sound role analysis, interview questions, and reports.
+
+---
+
+## 🎙️ Voice AI & Multimodal Implementation
+
+The platform features an end-to-end voice loop combining browser-native audio APIs with optional cloud multimodal processing:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Candidate as Candidate
+    participant Browser as Browser (Web Speech)
+    participant Telemetry as Telemetry Worker
+    participant Backend as FastAPI Server
+    participant Gemini as Gemini Audio AI
+
+    Note over Candidate,Browser: Turn Starts (Question Spoken by AI)
+    Browser->>Candidate: TTS SpeechSynthesis Speaks Question
+    Candidate->>Browser: Speaks Answer into Microphone
+    Browser->>Telemetry: Stream Audio Transcripts
+    Telemetry->>Telemetry: Compute Real-Time WPM (Pace)
+    Telemetry->>Telemetry: Detect Filler Words ("um", "uh", "like")
+    Telemetry->>Candidate: Update Live HUD Speedometer & Warnings
+    
+    alt Candidate Requests AI Audio Refine
+        Browser->>Backend: Post Recorded Audio Blob (.webm/.wav)
+        Backend->>Gemini: Gemini 1.5/2.5 Multimodal Audio Prompt
+        Gemini-->>Backend: High-Precision Technical Transcript
+        Backend-->>Browser: Return Polished Text
+    else Standard Voice Submission
+        Candidate->>Browser: Click "Submit Answer"
+        Browser->>Backend: Post Spoken Transcript + Telemetry Stats
+    end
+
+    Backend->>Backend: Evaluate 7 Competencies & Generate Next Question
+    Backend-->>Browser: Return Question & Turn Feedback
+    Browser->>Candidate: AI Synthesizes & Speaks Next Question
+```
+
+### Speech Capabilities:
+* **Speech-to-Text (STT)**: Continuous speech recognition via `webkitSpeechRecognition` with dynamic interim updates.
+* **Text-to-Speech (TTS)**: Automatic selection of natural US English speech voices (`Google US English`, `Microsoft Natural`), configured with personality-adjusted pitch and cadence.
+* **Live Speech Telemetry**: Continuous tracking of:
+  * **Speaking Pace (WPM)**: Calibrated against professional standards (optimal: 110–160 WPM).
+  * **Filler Word Counter**: Highlights verbal crutches (`um`, `uh`, `like`, `you know`, `basically`).
+  * **Elapsed Turn Duration**: Real-time duration timer in seconds.
+
+---
+
+## 🔄 Dynamic Questioning & Adaptive Logic
+
+Unlike static interview bots that cycle through fixed questions, this engine implements an **Adaptive 3-Level State Machine** with dynamic counter-questioning:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Level1_Screening: Ingest JD & Resume
+
+    state Level1_Screening {
+        [*] --> VerifyFoundations
+        VerifyFoundations: Level 1 — Screening (Turn 1 & 2)
+        VerifyFoundations: • Past Project Ownership
+        VerifyFoundations: • Technical Foundation & Education
+        VerifyFoundations: • High-Level Architecture
+    }
+
+    Level1_Screening --> EvaluateTurn1
+    
+    state EvaluateTurn1 <<choice>>
+    EvaluateTurn1 --> Level1_Screening: Superficial Answer (Counter-Question)
+    EvaluateTurn1 --> Level2_Competency: Answer Demonstrated Breadth
+
+    state Level2_Competency {
+        [*] --> ProbeTechnicalDepth
+        ProbeTechnicalDepth: Level 2 — Competency (Turn 3 & 4)
+        ProbeTechnicalDepth: • Real-World Trade-Offs
+        ProbeTechnicalDepth: • Verification of Resume Metric Claims
+        ProbeTechnicalDepth: • Concurrency & Data Pipelines
+    }
+
+    Level2_Competency --> EvaluateTurn2
+
+    state EvaluateTurn2 <<choice>>
+    EvaluateTurn2 --> Level2_Competency: Vague Resume Claim (Adaptive Probing)
+    EvaluateTurn2 --> Level3_DeepDive: Solid Technical Grounding
+
+    state Level3_DeepDive {
+        [*] --> StressTestArchitecture
+        StressTestArchitecture: Level 3 — Deep-Dive (Turn 5 & 6)
+        StressTestArchitecture: • System Scale Bottlenecks
+        StressTestArchitecture: • Failure Modes & Disaster Recovery
+        StressTestArchitecture: • Edge Case Resilience
+    }
+
+    Level3_DeepDive --> GenerateComprehensiveReport
+    GenerateComprehensiveReport --> [*]
+```
+
+### Dynamic Features:
+* **⚡ Adaptive Counter-Questioning**: When a candidate makes an unsubstantiated claim (e.g., *"improved API latency by 40%"*), the AI detects the ambiguity and immediately generates a targeted counter-question asking for baseline metrics and profiling tools.
+* **Interviewer Personas**:
+  * **Dr. Evelyn Vance** (*Professional & Rigorous*): Focuses on distributed architectures, trade-off clarity, and production discipline.
+  * **Marcus Reed** (*Supportive Coach*): Encouraging style focusing on problem-solving frameworks and fundamentals.
+  * **Alex Thorne** (*Strict Tech Lead*): Rapid-fire edge cases, failure scenarios, and code-level constraints.
+* **Industry Modes**: Big Tech/FAANG, HFT & Fintech, Cloud Security, and Early-Stage Startup modes.
 
 ---
 
 ## 📊 Evaluation & Scoring Methodology
 
-The platform uses a **two-tier evaluation engine** combining LLM rubric analysis with real-time speech telemetry:
+The platform scores performance across **7 Core Competency Dimensions** using both qualitative diagnostic rubrics and quantitative telemetry:
 
-### 1. Turn-by-Turn Question Evaluation (0–100)
-After each answer is submitted, the response is scored against a four-pillar rubric:
-* **Technical Correctness (30%)**: Conceptual accuracy, architectural mechanisms, correct tool/pattern selection.
-* **Depth & Specificity (30%)**: Mentions of concrete metrics (latency, RPS, cache hit ratios), trade-offs, and failure recovery modes.
-* **Direct Relevance & Alignment (25%)**: Directly answering the engineering problem posed vs superficial answers.
-* **Speech Delivery Telemetry (15%)**: Pacing (optimal 110–160 WPM), filler word frequency, and delivery flow.
+```mermaid
+pie title 7 Core Competency Weighting Distribution
+    "Technical Accuracy & Depth" : 25
+    "Problem-Solving & System Architecture" : 20
+    "Communication & Structured Articulation" : 15
+    "Practical Experience & Feasibility" : 15
+    "Completeness & Edge Case Coverage" : 10
+    "Behavioral Alignment & Ownership" : 10
+    "Adaptability & Trade-offs" : 5
+```
 
-### 2. Cumulative Performance Report & Overall Score
-$$\text{Overall Score} = (40\% \times \text{Avg Turn}) + (20\% \times \text{Technical Knowledge}) + (15\% \times \text{Communication}) + (15\% \times \text{Depth}) + (10\% \times \text{Problem Solving})$$
+### Overall Score Calculation:
+$$\text{Overall Score} = \sum_{i=1}^{7} (w_i \times \text{Competency}_i) - \text{Telemetry Penalty}$$
 
-#### Readiness Classification:
-* **🟢 Strong Candidate (`85 – 100`)**: Ready for final-round hiring bar.
-* **🟡 Interview Ready (`72 – 84`)**: Prepared; needs minor metric polish and edge-case justification.
-* **🟠 Needs Preparation (`58 – 71`)**: Foundational knowledge present, but answers lack depth.
-* **🔴 Not Ready (`< 58`)**: Requires structured revision before live company interviews.
+*Where $\text{Telemetry Penalty} = \min(10, \text{Excessive Fillers} \times 1.5 + \text{Pace Deviation Penalty})$.*
+
+### Readiness Classification Tiers:
+| Tier Badge | Score Range | Meaning & Actionable Guidance |
+| :--- | :---: | :--- |
+| 🟢 **Strong Candidate** | **85 – 100** | Exceeds hiring bar. Clear metrics, sound trade-offs, and structured communication. Ready for final team matching. |
+| 🟡 **Interview Ready** | **70 – 84** | Meets standard bar. Strong core knowledge; needs polish on edge cases and failure mode recovery. |
+| 🟠 **Needs Preparation** | **55 – 69** | High potential with noticeable gaps. Relies on buzzwords; requires revision of P1 core architectural concepts. |
+| 🔴 **Not Ready** | **< 55** | Significant conceptual gaps. Needs structured revision following the generated **5-Day Study Schedule**. |
 
 ---
 
-## 🏆 Bonus Features Implemented (Section 20 of Rubric)
+## 💡 Key Technical Decisions & Trade-Offs
 
-| Category | Bonus Feature | Implementation Details |
+| Decision | Alternative Considered | Selected Approach | Technical Rationale |
+| :--- | :--- | :--- | :--- |
+| **Speech Processing** | Server-side Whisper / ElevenLabs | **Web Speech API + Gemini Multimodal Backup** | Eliminates server streaming latency, zero bandwidth bottlenecks, completely free for the user, with cloud backup for complex jargon. |
+| **Theme System** | Ad-hoc CSS classes | **Semantic CSS Variables (`var(--bg-card)`, etc.)** | Enables instantaneous Light/Dark theme switching without re-rendering components or unmounting video streams. |
+| **Resilience Model** | Error out on API quota limit | **Deterministic Heuristic Rules Engine** | Guarantees candidates can always complete their mock session even during upstream OpenAI/Gemini outages. |
+| **State Persistence** | Pure Client-side Storage | **Hybrid SQLite (Backend) + LocalStorage (Client)** | SQLite preserves candidate history for recruiter analytics & CSV exports; `localStorage` keeps API keys and preferences client-side. |
+| **Layout Grid** | Hardcoded fixed column widths | **Fluid CSS Grid (`minmax(320px, 1fr)`)** | Prevents layout clipping on split-screen, tablet, and laptop resolutions without awkward horizontal scrollbars. |
+
+---
+
+## 🏆 Comprehensive Bonus Features Matrix
+
+All 18 rubric bonus features are fully functional:
+
+| Feature Name | Category | Primary Code Symbol / File |
 | :--- | :--- | :--- |
-| **Preparation & Gaps** | **AI-Generated Personalized Prep Plan** | Generates a 5-day study plan + P1/P2/P3 review checklists in [PerformanceReportScreen.jsx](frontend/src/components/PerformanceReportScreen.jsx). |
-| **Preparation & Gaps** | **Resume Improvement Suggestions** | Transforms passive bullets into Google XYZ-formula (`Accomplished [X] measured by [Y] by doing [Z]`) achievements. |
-| **Preparation & Gaps** | **Job-Specific Study Resources** | Tailored links & cheat-sheets (System Design Primer, NeetCode, DDIA) mapped to the JD's exact technologies. |
-| **History & Tracking** | **Persistent Interview History** | SQLite database (`backend/interview_history.db`) preserves all past transcripts, scores, and dates. |
-| **History & Tracking** | **Progress Tracking & Improvement** | Visual score trajectory sparklines across chronological attempts with growth delta calculation. |
-| **History & Tracking** | **Compare Performance Across Interviews** | Side-by-side session comparison in [HistoryModal.jsx](frontend/src/components/HistoryModal.jsx) with competency score delta diffs. |
-| **Simulation Modes** | **Coding / Technical Question Mode** | Toggleable Code Workspace in [InterviewRoomScreen.jsx](frontend/src/components/InterviewRoomScreen.jsx) with language syntax (Python, JS, SQL, Go) and scratchpad. |
-| **Simulation Modes** | **Industry-Specific Interview Modes** | Dropdown in [SettingsModal.jsx](frontend/src/components/SettingsModal.jsx) for FAANG/Big Tech, HFT & Fintech, Security, or Startup velocity. |
-| **Simulation Modes** | **AI Interviewer Personalities** | 3 distinct personas (Dr. Vance, Marcus Reed, Alex Thorne) with modulated TTS voice, strictness, and animated avatars. |
-| **Simulation Modes** | **Follow-up Interview Based on Performance**| One-click "Targeted Follow-Up" button on report re-launches the simulator specifically targeting Priority 1 weak areas. |
-| **Live Telemetry** | **Real-Time Speech Transcription** | Hands-free Web Speech STT streaming with Gemini Multimodal Audio transcription backup. |
-| **Live Telemetry** | **Filler-Word Analysis** | Real-time detector for `um`, `uh`, `like`, `you know` with visual alerts when $>3$ and communication score penalties. |
-| **Live Telemetry** | **Speaking Pace Analysis** | Real-time WPM speedometer gauge calibrated to optimal speaking pace (110–160 WPM). |
-| **Live Telemetry** | **Question Difficulty Adjustment** | Dynamic tagging (`Standard`, `Advanced System Architecture`, `Deep-Dive Edge Cases`) adjusting to candidate depth. |
-| **Enterprise / Talent**| **Recruiter Pipeline Dashboard** | Centralized dashboard in [RecruiterModal.jsx](frontend/src/components/RecruiterModal.jsx) with score filters, hire/pass recommendations, and CSV export. |
-| **Enterprise / Talent**| **Shareable Interview Report** | One-click "Share Report" copies formatted candidate evaluation scorecard to clipboard for recruiters/peers. |
-| **Enterprise / Talent**| **Multiple Job Profiles & Presets** | Quick presets for Backend, AI/ML, and Full-Stack + support for any custom JD & Resume files. |
-| **Aesthetics** | **Dynamic AI Interviewer Animation** | Dual-mode visualizer: Life-like SVG Persona Avatar (eye blinking, speech articulation, nodding) & 60 FPS Neural Canvas Sphere. |
+| **Recruiter Pipeline Dashboard** | Enterprise / Talent | [`RecruiterModal.jsx`](frontend/src/components/RecruiterModal.jsx) |
+| **CSV Candidate Export** | Enterprise / Talent | [`exportToCSV()` in RecruiterModal.jsx](frontend/src/components/RecruiterModal.jsx) |
+| **Interview Progress Tracking & Sparklines** | History & Tracking | [`HistoryModal.jsx`](frontend/src/components/HistoryModal.jsx) |
+| **Side-by-Side Interview Comparison** | History & Tracking | [`HistoryModal.jsx`](frontend/src/components/HistoryModal.jsx) |
+| **Persistent SQLite Database Storage** | History & Tracking | [`database.py`](backend/app/db/database.py) |
+| **Interactive Coding & Technical Workspace**| Simulation Modes | [`InterviewRoomScreen.jsx`](frontend/src/components/InterviewRoomScreen.jsx) |
+| **Multi-Language Syntax Support** | Simulation Modes | Python, JS, TypeScript, SQL, Go in [`InterviewRoomScreen.jsx`](frontend/src/components/InterviewRoomScreen.jsx) |
+| **Industry-Specific Interview Modes** | Simulation Modes | FAANG, Fintech, Security, Startup in [`SettingsModal.jsx`](frontend/src/components/SettingsModal.jsx) |
+| **Interviewer Persona Modulations** | Simulation Modes | Dr. Vance, Marcus Reed, Alex Thorne in [`AIInterviewerStage.jsx`](frontend/src/components/AIInterviewerStage.jsx) |
+| **Targeted Follow-up Interview Launch** | Simulation Modes | [`onLaunchFollowUp()` in PerformanceReportScreen.jsx](frontend/src/components/PerformanceReportScreen.jsx) |
+| **Google XYZ Resume Bullet Generator** | Prep & Gaps | [`resumeSuggestions` in PerformanceReportScreen.jsx](frontend/src/components/PerformanceReportScreen.jsx) |
+| **Curated Job-Specific Study Links** | Prep & Gaps | DDIA, System Design Primer, NeetCode in [`evaluator.py`](backend/app/services/evaluator.py) |
+| **Actionable 5-Day Study Schedule** | Prep & Gaps | [`study_plan` in evaluator.py](backend/app/services/evaluator.py) |
+| **Real-Time WPM Pacing Telemetry** | Live Telemetry | [`speech.js`](frontend/src/services/speech.js) & [`InterviewRoomScreen.jsx`](frontend/src/components/InterviewRoomScreen.jsx) |
+| **Real-Time Filler Word Detection** | Live Telemetry | [`detectFillers()` in speech.js](frontend/src/services/speech.js) |
+| **Animated Life-Like SVG AI Avatar** | Aesthetics | Eye blinking, mouth articulation & nodding in [`AIInterviewerStage.jsx`](frontend/src/components/AIInterviewerStage.jsx) |
+| **60 FPS Audio-Reactive Neural Canvas** | Aesthetics | Canvas quantum orb with orbital rings in [`AIInterviewerStage.jsx`](frontend/src/components/AIInterviewerStage.jsx) |
+| **One-Click Shareable Candidate Report** | Sharing | Clipboard formatted scorecard in [`PerformanceReportScreen.jsx`](frontend/src/components/PerformanceReportScreen.jsx) |
 
 ---
 
 ## 🎨 UI / UX Design System
 
-The application features an **Elevated Slate-Glassmorphism Design System**:
-- **Palette**: Deep luminous slate-navy (`#0c101a` base, `#141c2e` surface, `#161f32` cards) with high-contrast crisp typography (`#ffffff` primary, `#cbd5e1` secondary).
-- **Glassmorphism**: Layered backdrop blur (`blur(16px)`), subtle borders (`rgba(255, 255, 255, 0.12)`), and radiant ambient glow meshes.
-- **Typography**: Google Fonts *Outfit* (bold geometric headings), *Plus Jakarta Sans* (clean body text), and *JetBrains Mono* (code & telemetry).
-- **Responsive & Accessible**: Split-screen video interview layout, accessible form controls, and print stylesheet for PDF reports.
+The platform features an **Executive Dual Light & Dark Mode Design System** defaulted to crisp Light Mode:
+
+```
+Light Mode Tokens (Default)              Dark Mode Tokens
+├── --bg-main: #f8fafc                   ├── --bg-main: #0c101a
+├── --bg-card: #ffffff                   ├── --bg-card: rgba(22, 31, 50, 0.88)
+├── --text-main: #0f172a (Deep Slate)    ├── --text-main: #ffffff
+├── --border-subtle: #e2e8f0             ├── --border-subtle: rgba(255, 255, 255, 0.12)
+└── --primary: #4f46e5 (Indigo)          └── --primary: #6366f1
+```
+
+* **Custom Brand Logo**: Hexagonal **Apex Prism Aperture** SVG emblem symbolizing growth, focus, and technical precision.
+* **Typography**: Google Fonts *Outfit* (bold structural headings), *Plus Jakarta Sans* (readable body text), and *JetBrains Mono* (code blocks).
+* **Fluid Responsiveness**: Flexbox and auto-fit grid columns adapt smoothly from 4K workstations down to tablet viewports.
 
 ---
 
-## 📦 Project Structure
+## 🛠️ Local Development & Quickstart
 
-```
-assignment3/
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── routes.py             # REST API endpoints (/analyze, /interview/*, /history/*, /transcribe-audio)
-│   │   ├── db/
-│   │   │   └── database.py           # SQLite persistent storage for sessions & performance reports
-│   │   ├── models/
-│   │   │   └── schemas.py            # Pydantic data schemas
-│   │   ├── services/
-│   │   │   ├── analyzer.py           # Role & candidate analysis + Job Fit scoring
-│   │   │   ├── extractor.py          # PDF / DOCX / TXT document extraction
-│   │   │   ├── interview_engine.py   # 3-level adaptive interview state manager & dynamic question generator
-│   │   │   ├── evaluator.py          # Comprehensive performance report & study plan synthesizer
-│   │   │   └── llm_service.py        # Gemini & OpenAI provider interface with fallback models
-│   │   └── config.py                 # Configuration & environment variables
-│   ├── interview_history.db          # Persistent SQLite database file
-│   ├── requirements.txt              # Backend dependencies
-│   ├── runtime.txt                   # Python runtime specification (python-3.12.8)
-│   ├── .env                          # Server-side API key configuration
-│   └── main.py                       # FastAPI entrypoint (Port 8000)
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx            # Top navigation, progress, modal triggers
-│   │   │   ├── InputScreen.jsx       # JD & Resume inputs (paste text or file upload)
-│   │   │   ├── RoleAnalysisScreen.jsx# Step 1: Role breakdown dashboard
-│   │   │   ├── CandidateFitScreen.jsx# Step 2: Fit score gauge & flagged claims
-│   │   │   ├── InterviewRoomScreen.jsx# Step 3: Interactive voice & video interview simulator
-│   │   │   ├── AIInterviewerStage.jsx # Dynamic animated AI interviewer (Avatar & Neural Core)
-│   │   │   ├── PerformanceReportScreen.jsx # Step 4: Report with scores & prep roadmap
-│   │   │   ├── SettingsModal.jsx     # API keys & interviewer persona settings
-│   │   │   └── HistoryModal.jsx      # Past session comparison & history
-│   │   ├── services/
-│   │   │   ├── api.js                # Frontend API client
-│   │   │   └── speech.js             # Web Speech STT/TTS & live telemetry
-│   │   ├── styles/
-│   │   │   └── index.css             # Vanilla CSS elevated slate design system
-│   │   ├── App.jsx                   # Main orchestrator
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-├── render.yaml                       # Render Infrastructure-as-Code deployment blueprint
-└── README.md                         # Project documentation
-```
+### Prerequisites
+* **Python**: 3.11 or 3.12
+* **Node.js**: 18+ or 20+
 
----
-
-## ⚡ Local Setup & Execution
-
-### 1. Backend Setup
+### 1. Clone & Setup Backend
 ```bash
-cd backend
+# Clone the repository
+git clone https://github.com/adarsh-dubey-gthb/EDXSO3.git
+cd EDXSO3/backend
+
+# Create virtual environment
 python -m venv venv
 
+# Activate virtual environment
 # Windows:
 .\venv\Scripts\activate
 # macOS/Linux:
 source venv/bin/activate
 
+# Install dependencies
 pip install -r requirements.txt
 
-# Start FastAPI server (Port 8000)
+# Start FastAPI server
 python -m uvicorn main:app --app-dir . --host 127.0.0.1 --port 8000 --reload
 ```
+*Backend runs at `http://127.0.0.1:8000` with Swagger docs at `http://127.0.0.1:8000/docs`.*
 
-### 2. Frontend Setup
+### 2. Setup Frontend
 ```bash
-cd frontend
+cd ../frontend
+
+# Install dependencies
 npm install
 
-# Start Vite dev server (Port 5173)
+# Start Vite dev server
 npm run dev
 ```
-
-Open `http://localhost:5173/` in your browser.
-
----
-
-## 🌐 Live Render Deployment
-
-The application is deployed live using Render's Infrastructure-as-Code configuration ([render.yaml](render.yaml)):
-* **Backend Web Service**: Running on Python 3.12 at `https://interview-accelerator-backend.onrender.com`
-* **Frontend Static Site**: Built with Vite and served globally at `https://interview-accelerator-frontend.onrender.com`
-* **Free AI Tier**: Pre-configured server-side Gemini key with automatic user guidance to supply personal keys in **Settings** if free tier quota is exhausted.
+*Frontend runs at `http://localhost:5173/`.*
 
 ---
 
-## 🔒 Security & Privacy
+## 📡 REST API Specification
 
-* **Zero Hardcoded Secrets**: All API keys are loaded via environment variables or stored securely in browser `localStorage`.
-* **Zero External Data Leaks**: Resumes, Job Descriptions, and interview sessions are stored locally in the persistent SQLite database (`backend/interview_history.db`).
-* **Non-Blocking Fallback**: If LLM quotas are exhausted or external APIs are unreachable, the system automatically engages its internal heuristic rules engine so candidates can complete their practice interview uninterrupted.
+| Method | Endpoint | Description | Request Body / Params |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/health` | System health check & AI provider status | None |
+| `GET` | `/api/sample-data` | Pre-built sample presets (AI Engineer & Full-Stack) | None |
+| `POST` | `/api/upload-doc` | Extracts text from uploaded PDF/DOCX/TXT | `multipart/form-data` (`file`) |
+| `POST` | `/api/analyze` | Deconstructs role & computes candidate job fit | `{ jd_text, resume_text }` |
+| `POST` | `/api/interview/start` | Initializes 3-level adaptive interview session | `{ role_analysis, candidate_analysis, persona }` |
+| `POST` | `/api/interview/submit-turn` | Evaluates answer, triggers counter-question if needed | `{ session_id, answer, audio_metrics }` |
+| `POST` | `/api/interview/finish` | Synthesizes performance report & study roadmap | `{ session_id }` |
+| `GET` | `/api/history` | Fetches all stored candidate interviews from SQLite | None |
+| `DELETE`| `/api/history/{id}` | Deletes specific interview record | Path param `id` |
+| `POST` | `/api/transcribe-audio`| Multimodal Gemini audio transcription | `multipart/form-data` (`file`) |
+
+---
+
+<div align="center">
+  <sub>Built for the AI Product Engineer Challenge (Assignment 3) • Student Credibility • FastAPI + React Vite Architecture</sub>
+</div>
