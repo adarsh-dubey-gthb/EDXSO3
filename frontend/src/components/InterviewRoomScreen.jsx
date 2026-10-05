@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { voiceManager } from "../services/speech";
 import { submitInterviewAnswer, finishInterviewSession, transcribeAudioFile } from "../services/api";
+import AIInterviewerStage from "./AIInterviewerStage";
 
 export default function InterviewRoomScreen({
   sessionInfo,
@@ -332,75 +333,19 @@ export default function InterviewRoomScreen({
         {/* Left Column: AI Interviewer Interactive Screen */}
         <div className="glass-panel" style={{ padding: "26px", display: "flex", flexDirection: "column" }}>
           
-          {/* AI Avatar Stage */}
-          <div style={{
-            background: "linear-gradient(180deg, rgba(14, 18, 27, 0.9) 0%, rgba(10, 14, 23, 0.95) 100%)",
-            border: "1px solid var(--border-subtle)",
-            borderRadius: "var(--radius-lg)",
-            padding: "32px 20px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            minHeight: "220px",
-            marginBottom: "20px"
-          }}>
-            {/* Status indicator */}
-            <div style={{ position: "absolute", top: "14px", left: "16px", display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                background: isSpeakingAI ? "#818cf8" : isListeningCandidate ? "#10b981" : "#64748b"
-              }}></span>
-              <span style={{ fontSize: "0.76rem", color: "var(--text-muted)", fontWeight: 600 }}>
-                {isSpeakingAI ? "AI Interviewer Speaking..." : isListeningCandidate ? "AI Listening to You..." : "Ready"}
-              </span>
-            </div>
-
-            {/* AI Avatar Icon with pulsing wave */}
-            <div
-              className={isSpeakingAI ? "avatar-speaking" : ""}
-              style={{
-                width: "84px",
-                height: "84px",
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "14px",
-                transition: "all 0.3s ease"
-              }}
-            >
-              <Bot size={44} color="#ffffff" />
-            </div>
-
-            {/* Speaking waveform visualizer */}
-            {isSpeakingAI ? (
-              <div className="waveform-container" style={{ margin: "6px 0" }}>
-                <span className="waveform-bar"></span>
-                <span className="waveform-bar"></span>
-                <span className="waveform-bar"></span>
-                <span className="waveform-bar"></span>
-                <span className="waveform-bar"></span>
-                <span className="waveform-bar"></span>
-              </div>
-            ) : (
-              <div style={{ height: "36px", display: "flex", alignItems: "center", color: "var(--text-dim)", fontSize: "0.82rem" }}>
-                <span>Interviewer Portal</span>
-              </div>
-            )}
-
-            {/* Audio replay button */}
-            <button
-              className="btn btn-secondary"
-              onClick={() => playAIQuestion(currentQuestion)}
-              style={{ marginTop: "6px", fontSize: "0.78rem", padding: "4px 12px", borderRadius: "var(--radius-full)" }}
-            >
-              <Volume2 size={13} /> Replay Question Audio
-            </button>
+          {/* AI Avatar Stage with Dynamic Neural Hologram & Vector Persona Avatar */}
+          <div style={{ marginBottom: "20px" }}>
+            <AIInterviewerStage
+              isSpeakingAI={isSpeakingAI}
+              isListeningCandidate={isListeningCandidate}
+              audioLevel={audioLevel}
+              isSubmitting={isSubmitting}
+              isTranscribingAI={isTranscribingAI}
+              persona={persona}
+              currentQuestion={currentQuestion}
+              onReplayAudio={() => playAIQuestion(currentQuestion)}
+              difficultyTag={difficultyTag}
+            />
           </div>
 
           {/* Current Question Box */}
