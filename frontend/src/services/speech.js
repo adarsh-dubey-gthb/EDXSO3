@@ -9,6 +9,9 @@ export class VoiceManager {
     this.isListening = false;
     this.shouldBeListening = false;
     this.isSpeaking = false;
+    this.currentUtterance = null;
+    this.voices = [];
+    this.resumeTimer = null;
     
     // Audio recording & visualizer stream
     this.mediaStream = null;
@@ -22,6 +25,42 @@ export class VoiceManager {
     this.currentInterim = "";
 
     this.initRecognition();
+    this.initVoices();
+  }
+
+  initVoices() {
+    if (!this.synth) return;
+    this.loadVoices();
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        this.loadVoices();
+      };
+    }
+  }
+
+  loadVoices() {
+    if (!this.synth) return [];
+    try {
+      this.voices = this.synth.getVoices() || [];
+    } catch (e) {
+      this.voices = [];
+    }
+    return this.voices;
+  }
+
+  warmup() {
+    if (!this.synth) return;
+    try {
+      if (this.synth.paused) {
+        this.synth.resume();
+      }
+      const silent = new SpeechSynthesisUtterance(" ");
+      silent.volume = 0.01;
+      silent.rate = 10;
+      this.synth.speak(silent);
+    } catch (e) {
+      console.warn("TTS warmup note:", e);
+    }
   }
 
   initRecognition() {
@@ -36,21 +75,57 @@ export class VoiceManager {
     }
   }
 
-  speak(text, onStart, onEnd, onError) {
+  speak(text, onStart, onEnd, onError, persona = "Professional & Rigorous") {
     if (!this.synth) {
       if (onEnd) onEnd();
       return;
     }
 
-    this.stopSpeaking();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    // Cancel prior speech and unpause stuck queue
+    try {
+      if (this.synth.paused) {
+        this.synth.resume();
+      }
+      this.synth.cancel();
+    } catch (e) {}
 
-    const voices = this.synth.getVoices();
+    if (this.resumeTimer) {
+      clearInterval(this.resumeTimer);
+      this.resumeTimer = null;
+    }
+
+    if (!text || !text.trim()) {
+      if (onEnd) onEnd();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    this.currentUtterance = utterance; // Retain reference to prevent V8 garbage collection mid-speech
+
+    // Persona-based voice modulation
+    if (persona === "Supportive Coach") {
+      utterance.rate = 0.96;
+      utterance.pitch = 1.05;
+    } else if (persona === "Strict Tech Lead") {
+      utterance.rate = 1.04;
+      utterance.pitch = 0.94;
+    } else {
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+    }
+
+    const voices = this.voices.length ? this.voices : this.loadVoices();
     const preferredVoice = voices.find(v => 
-      v.lang.startsWith("en") && (v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Samantha") || v.name.includes("Daniel") || v.name.includes("Guy") || v.name.includes("Jenny"))
-    ) || voices.find(v => v.lang.startsWith("en"));
+      v.lang.startsWith("en") && (
+        v.name.includes("Natural") || 
+        v.name.includes("Google") || 
+        v.name.includes("Jenny") || 
+        v.name.includes("Guy") || 
+        v.name.includes("Samantha") || 
+        v.name.includes("Daniel") || 
+        v.name.includes("Arthur")
+      )
+    ) || voices.find(v => v.lang.startsWith("en")) || voices[0];
     
     if (preferredVoice) {
       utterance.voice = preferredVoice;
@@ -63,22 +138,51 @@ export class VoiceManager {
 
     utterance.onend = () => {
       this.isSpeaking = false;
+      this.currentUtterance = null;
+      if (this.resumeTimer) clearInterval(this.resumeTimer);
       if (onEnd) onEnd();
     };
 
     utterance.onerror = (e) => {
+      console.warn("Speech synthesis error event:", e);
       this.isSpeaking = false;
+      this.currentUtterance = null;
+      if (this.resumeTimer) clearInterval(this.resumeTimer);
       if (onError) onError(e);
       else if (onEnd) onEnd();
     };
 
-    this.synth.speak(utterance);
+    // Chromium speech timeout bug workaround: resume if paused mid-speech
+    this.resumeTimer = setInterval(() => {
+      if (!this.isSpeaking) {
+        clearInterval(this.resumeTimer);
+      } else if (this.synth.paused) {
+        this.synth.resume();
+      }
+    }, 4000);
+
+    try {
+      this.synth.speak(utterance);
+    } catch (err) {
+      console.warn("Speech synthesis speak exception:", err);
+      this.isSpeaking = false;
+      this.currentUtterance = null;
+      if (onError) onError(err);
+      else if (onEnd) onEnd();
+    }
   }
 
   stopSpeaking() {
     if (this.synth) {
-      this.synth.cancel();
+      try {
+        if (this.synth.paused) {
+          this.synth.resume();
+        }
+        this.synth.cancel();
+      } catch (e) {}
       this.isSpeaking = false;
+      this.currentUtterance = null;
+      if (this.resumeTimer) clearInterval(this.resumeTimer);
     }
   }
 

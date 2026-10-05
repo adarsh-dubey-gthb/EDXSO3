@@ -1,5 +1,6 @@
 import React from "react";
 import { User, CheckCircle, AlertTriangle, XCircle, ArrowRight, ArrowLeft, ShieldAlert, Award, FileCode, Play } from "lucide-react";
+import { voiceManager } from "../services/speech";
 
 export default function CandidateFitScreen({ candidateData, jobFit, roleData, onStartInterview, onBack }) {
   if (!candidateData || !jobFit) return null;
@@ -41,7 +42,14 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
           <button className="btn btn-secondary" onClick={onBack}>
             <ArrowLeft size={16} /> Role Analysis
           </button>
-          <button className="btn btn-primary" onClick={onStartInterview} style={{ boxShadow: "0 4px 20px rgba(99, 102, 241, 0.4)" }}>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              voiceManager.warmup();
+              onStartInterview();
+            }}
+            style={{ boxShadow: "0 4px 20px rgba(99, 102, 241, 0.4)" }}
+          >
             <Play size={16} />
             <span>Launch AI Interview Simulator</span>
             <ArrowRight size={16} />

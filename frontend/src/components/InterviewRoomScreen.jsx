@@ -103,12 +103,14 @@ export default function InterviewRoomScreen({
   }, []);
 
   const playAIQuestion = (text) => {
+    if (!text || !text.trim()) return;
     setIsSpeakingAI(true);
     voiceManager.speak(
       text,
       () => setIsSpeakingAI(true),
       () => setIsSpeakingAI(false),
-      () => setIsSpeakingAI(false)
+      () => setIsSpeakingAI(false),
+      persona
     );
   };
 
@@ -424,6 +426,62 @@ export default function InterviewRoomScreen({
               fontWeight: 500
             }}>
               "{currentQuestion}"
+            </div>
+
+            {/* Prominent Question TTS Control Bar */}
+            <div style={{
+              marginTop: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              background: "rgba(99, 102, 241, 0.08)",
+              border: "1px solid rgba(99, 102, 241, 0.25)",
+              borderRadius: "var(--radius-md)",
+              padding: "10px 16px",
+              flexWrap: "wrap",
+              gap: "10px"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Volume2 size={16} color={isSpeakingAI ? "#818cf8" : "var(--text-dim)"} />
+                <span style={{ fontSize: "0.82rem", color: isSpeakingAI ? "#818cf8" : "var(--text-muted)", fontWeight: 600 }}>
+                  {isSpeakingAI ? "AI Interviewer Speaking..." : "Interviewer Voice TTS"}
+                </span>
+                {isSpeakingAI && (
+                  <span style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    background: "#818cf8",
+                    boxShadow: "0 0 8px #818cf8"
+                  }} />
+                )}
+              </div>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  if (isSpeakingAI) {
+                    voiceManager.stopSpeaking();
+                    setIsSpeakingAI(false);
+                  } else {
+                    playAIQuestion(currentQuestion);
+                  }
+                }}
+                style={{
+                  padding: "6px 14px",
+                  fontSize: "0.8rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: isSpeakingAI ? "rgba(244, 63, 94, 0.15)" : "rgba(99, 102, 241, 0.22)",
+                  borderColor: isSpeakingAI ? "rgba(244, 63, 94, 0.4)" : "rgba(99, 102, 241, 0.45)",
+                  color: isSpeakingAI ? "#fda4af" : "#ffffff",
+                  fontWeight: 600
+                }}
+                title={isSpeakingAI ? "Click to stop voice playback" : "Click to hear the AI speak the question aloud"}
+              >
+                {isSpeakingAI ? <Square size={13} /> : <Play size={13} fill="currentColor" />}
+                <span>{isSpeakingAI ? "Stop Voice" : "🔊 Listen to Question"}</span>
+              </button>
             </div>
           </div>
 
