@@ -38,7 +38,7 @@ export default function HistoryModal({
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.78)",
+      backgroundColor: "var(--modal-backdrop)",
       backdropFilter: "blur(10px)",
       zIndex: 100,
       display: "flex",
@@ -50,9 +50,9 @@ export default function HistoryModal({
         width: "100%",
         maxWidth: "760px",
         padding: "26px",
-        background: "rgba(18, 26, 44, 0.96)",
-        boxShadow: "0 25px 60px rgba(0,0,0,0.85)",
-        border: "1px solid rgba(255, 255, 255, 0.14)",
+        background: "var(--bg-card)",
+        boxShadow: "var(--shadow-lg)",
+        border: "1px solid var(--border-subtle)",
         maxHeight: "88vh",
         display: "flex",
         flexDirection: "column"
@@ -73,7 +73,7 @@ export default function HistoryModal({
               <Database size={18} color="#818cf8" />
             </div>
             <div>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "#ffffff" }}>
+              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "var(--text-main)" }}>
                 Interview History & Performance Analytics
               </h2>
               <span style={{ fontSize: "0.74rem", color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "5px", marginTop: "2px" }}>
@@ -174,7 +174,7 @@ export default function HistoryModal({
                         style={{ flex: 1, cursor: "pointer" }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                          <span style={{ fontSize: "1rem", fontWeight: 700, color: "#ffffff" }}>
+                          <span style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-main)" }}>
                             {item.role_title || "Technical Interview"}
                           </span>
                         </div>
@@ -288,7 +288,7 @@ export default function HistoryModal({
                 <span style={{ fontSize: "0.76rem", color: "var(--text-muted)", textTransform: "uppercase", fontWeight: 700 }}>
                   Candidate Growth Trajectory
                 </span>
-                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#ffffff", marginTop: "2px" }}>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text-main)", marginTop: "2px" }}>
                   {scoreImprovement >= 0 ? `+${scoreImprovement}% Score Improvement` : `${scoreImprovement}% Score Variation`}
                 </div>
                 <div style={{ fontSize: "0.78rem", color: "var(--text-dim)", marginTop: "2px" }}>
@@ -369,7 +369,7 @@ export default function HistoryModal({
                 {/* Session A */}
                 <div style={{ borderRight: "1px solid var(--border-subtle)", paddingRight: "12px" }}>
                   <div style={{ fontSize: "0.72rem", color: "var(--text-dim)", textTransform: "uppercase" }}>Session A</div>
-                  <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#ffffff", marginTop: "2px" }}>{sessionA.role_title}</div>
+                  <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)", marginTop: "2px" }}>{sessionA.role_title}</div>
                   <div style={{ fontSize: "0.74rem", color: "var(--text-dim)" }}>{sessionA.interview_date || "Recorded Session"}</div>
                   
                   <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginTop: "12px" }}>
@@ -389,7 +389,7 @@ export default function HistoryModal({
                 {/* Session B */}
                 <div style={{ paddingLeft: "6px" }}>
                   <div style={{ fontSize: "0.72rem", color: "var(--text-dim)", textTransform: "uppercase" }}>Session B</div>
-                  <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#ffffff", marginTop: "2px" }}>{sessionB.role_title}</div>
+                  <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)", marginTop: "2px" }}>{sessionB.role_title}</div>
                   <div style={{ fontSize: "0.74rem", color: "var(--text-dim)" }}>{sessionB.interview_date || "Recorded Session"}</div>
 
                   <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginTop: "12px" }}>

@@ -79,7 +79,7 @@ export default function RecruiterModal({
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.75)",
+      backgroundColor: "var(--modal-backdrop)",
       backdropFilter: "blur(10px)",
       zIndex: 100,
       display: "flex",
@@ -92,9 +92,9 @@ export default function RecruiterModal({
         maxWidth: "960px",
         maxHeight: "90vh",
         padding: "28px",
-        background: "rgba(18, 26, 44, 0.96)",
-        boxShadow: "0 25px 60px rgba(0,0,0,0.85)",
-        border: "1px solid rgba(255, 255, 255, 0.14)",
+        background: "var(--bg-card)",
+        boxShadow: "var(--shadow-lg)",
+        border: "1px solid var(--border-subtle)",
         display: "flex",
         flexDirection: "column",
         overflow: "hidden"
@@ -114,7 +114,7 @@ export default function RecruiterModal({
               <Users size={18} color="#ffffff" />
             </div>
             <div>
-              <h2 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0, color: "#ffffff" }}>
+              <h2 style={{ fontSize: "1.25rem", fontWeight: 700, margin: 0, color: "var(--text-main)" }}>
                 Recruiter & Talent Pipeline Dashboard
               </h2>
               <span style={{ fontSize: "0.78rem", color: "var(--text-muted)", display: "flex", alignItems: "center", gap: "5px", marginTop: "2px" }}>
@@ -155,19 +155,19 @@ export default function RecruiterModal({
 
         {/* Top Recruiter Metrics Cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "14px", marginBottom: "20px" }}>
-          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
+          <div style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
             <div style={{ fontSize: "0.74rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700 }}>Total Evaluated</div>
-            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "#ffffff", marginTop: "4px" }}>{totalEvaluated}</div>
+            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--text-main)", marginTop: "4px" }}>{totalEvaluated}</div>
           </div>
-          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
+          <div style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
             <div style={{ fontSize: "0.74rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700 }}>Average Score</div>
-            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "#818cf8", marginTop: "4px" }}>{avgScore}/100</div>
+            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--primary)", marginTop: "4px" }}>{avgScore}/100</div>
           </div>
-          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
+          <div style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
             <div style={{ fontSize: "0.74rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700 }}>Benchmark Qualified (≥80)</div>
-            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "#34d399", marginTop: "4px" }}>{strongCandidates}</div>
+            <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--emerald)", marginTop: "4px" }}>{strongCandidates}</div>
           </div>
-          <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
+          <div style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "14px" }}>
             <div style={{ fontSize: "0.74rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700 }}>Pass Calibration Rate</div>
             <div style={{ fontSize: "1.6rem", fontWeight: 700, color: "#67e8f9", marginTop: "4px" }}>{hireRate}%</div>
           </div>
@@ -266,7 +266,7 @@ export default function RecruiterModal({
                     {/* Candidate & Role */}
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "#ffffff" }}>
+                        <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)" }}>
                           {c.candidate_name || "Anonymous Candidate"}
                         </span>
                         <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
@@ -308,7 +308,7 @@ export default function RecruiterModal({
                       justifyContent: "center",
                       fontWeight: 700,
                       fontSize: "0.86rem",
-                      color: "#ffffff"
+                      color: "var(--text-main)"
                     }}>
                       {score}
                     </div>

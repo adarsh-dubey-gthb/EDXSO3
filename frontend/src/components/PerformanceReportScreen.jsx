@@ -163,7 +163,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
         gap: "32px",
         alignItems: "center",
         marginBottom: "32px",
-        background: "linear-gradient(135deg, rgba(22, 31, 50, 0.9), rgba(15, 21, 35, 0.96))"
+        background: "var(--bg-card)"
       }}>
         
         {/* Left: Circular Overall Score Radial Meter */}
@@ -175,7 +175,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
                 cy="70"
                 r="52"
                 fill="none"
-                stroke="rgba(255, 255, 255, 0.08)"
+                stroke="var(--gauge-track, #e2e8f0)"
                 strokeWidth="12"
               />
               <circle
@@ -270,12 +270,12 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
             else if (score < 65) barColor = "#f43f5e";
 
             return (
-              <div key={comp} style={{ background: "rgba(255, 255, 255, 0.02)", padding: "14px 16px", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
+              <div key={comp} style={{ background: "var(--card-inner)", padding: "14px 16px", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "0.88rem", fontWeight: 600 }}>
                   <span style={{ color: "var(--text-main)" }}>{comp}</span>
                   <span style={{ color: barColor, fontWeight: 700 }}>{score}%</span>
                 </div>
-                <div style={{ height: "7px", background: "rgba(255, 255, 255, 0.08)", borderRadius: "4px", overflow: "hidden" }}>
+                <div style={{ height: "7px", background: "var(--gauge-track, #e2e8f0)", borderRadius: "4px", overflow: "hidden" }}>
                   <div style={{
                     width: `${score}%`,
                     height: "100%",
@@ -300,7 +300,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
         <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
           {report.question_feedback?.map((qf, idx) => (
             <div key={idx} style={{
-              background: "rgba(255, 255, 255, 0.02)",
+              background: "var(--card-inner)",
               border: "1px solid var(--border-subtle)",
               borderRadius: "var(--radius-lg)",
               padding: "20px"
@@ -311,7 +311,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
                   <span className="badge badge-primary" style={{ fontSize: "0.72rem", marginBottom: "6px" }}>
                     {qf.level_name || `Turn ${idx + 1}`}
                   </span>
-                  <div style={{ fontSize: "1rem", color: "#ffffff", fontWeight: 600 }}>
+                  <div style={{ fontSize: "1rem", color: "var(--text-main)", fontWeight: 600 }}>
                     "{qf.question}"
                   </div>
                 </div>
@@ -323,7 +323,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
               </div>
 
               {/* Candidate Spoken Answer */}
-              <div style={{ marginBottom: "16px", padding: "12px 16px", background: "rgba(18, 26, 44, 0.85)", borderRadius: "var(--radius-md)", borderLeft: "3px solid #818cf8" }}>
+              <div style={{ marginBottom: "16px", padding: "12px 16px", background: "var(--bg-card)", borderRadius: "var(--radius-md)", borderLeft: "3px solid var(--primary-light)", border: "1px solid var(--border-subtle)", borderLeftWidth: "3px" }}>
                 <div style={{ fontSize: "0.76rem", color: "var(--text-dim)", textTransform: "uppercase", fontWeight: 700, marginBottom: "4px" }}>
                   Your Spoken Answer
                 </div>
@@ -406,10 +406,10 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
       </div>
 
       {/* Bonus Feature: AI Resume Enhancement Suggestions (Google XYZ Formula) */}
-      <div className="glass-panel" style={{ padding: "28px", marginBottom: "32px", border: "1px solid rgba(99, 102, 241, 0.3)" }}>
+      <div className="glass-panel" style={{ padding: "28px", marginBottom: "32px", border: "1px solid var(--border-highlight)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-          <FileText size={20} color="#818cf8" />
-          <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "#ffffff" }}>
+          <FileText size={20} color="var(--primary)" />
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, color: "var(--text-main)" }}>
             AI Resume Bullet Enhancement Suggestions (Google XYZ Framework)
           </h2>
         </div>
@@ -419,10 +419,10 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
 
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           {resumeSuggestions.map((sug, sidx) => (
-            <div key={sidx} style={{ background: "rgba(255, 255, 255, 0.025)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "16px" }}>
+            <div key={sidx} style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "16px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "14px", marginBottom: "8px" }}>
                 <div>
-                  <span style={{ fontSize: "0.72rem", color: "#fda4af", textTransform: "uppercase", fontWeight: 700 }}>
+                  <span style={{ fontSize: "0.72rem", color: "var(--rose)", textTransform: "uppercase", fontWeight: 700 }}>
                     ❌ Passive Baseline Bullet
                   </span>
                   <div style={{ fontSize: "0.86rem", color: "var(--text-dim)", marginTop: "4px", fontStyle: "italic" }}>
@@ -430,10 +430,10 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
                   </div>
                 </div>
                 <div>
-                  <span style={{ fontSize: "0.72rem", color: "#34d399", textTransform: "uppercase", fontWeight: 700 }}>
+                  <span style={{ fontSize: "0.72rem", color: "var(--emerald)", textTransform: "uppercase", fontWeight: 700 }}>
                     ✅ Google XYZ Optimized Bullet
                   </span>
-                  <div style={{ fontSize: "0.88rem", color: "#ffffff", marginTop: "4px", fontWeight: 600 }}>
+                  <div style={{ fontSize: "0.88rem", color: "var(--text-main)", marginTop: "4px", fontWeight: 600 }}>
                     "{sug.enhanced}"
                   </div>
                 </div>
@@ -456,7 +456,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "20px" }}>
           {report.preparation_gaps?.map((gap, idx) => (
             <div key={idx} style={{
-              background: "rgba(255, 255, 255, 0.02)",
+              background: "var(--card-inner)",
               border: "1px solid var(--border-subtle)",
               borderRadius: "var(--radius-lg)",
               padding: "20px",
@@ -470,7 +470,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
                 <span style={{ fontSize: "0.76rem", color: "var(--text-dim)", textTransform: "uppercase" }}>{gap.category}</span>
               </div>
 
-              <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "12px", color: "#f8fafc" }}>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "12px", color: "var(--text-main)" }}>
                 {gap.title}
               </h3>
 
@@ -507,7 +507,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
             {report.study_plan.map((item, idx) => (
               <div key={idx} style={{
-                background: "rgba(255, 255, 255, 0.03)",
+                background: "var(--card-inner)",
                 padding: "16px",
                 borderRadius: "var(--radius-md)",
                 border: "1px solid var(--border-subtle)"
@@ -516,7 +516,7 @@ Evaluated via Interview Accelerator: https://interview-accelerator-frontend.onre
                   <span className="badge badge-primary">{item.day_or_step}</span>
                   <span style={{ fontSize: "0.76rem", color: "var(--text-dim)" }}>Milestone</span>
                 </div>
-                <div style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "8px", color: "#ffffff" }}>
+                <div style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "8px", color: "var(--text-main)" }}>
                   {item.focus}
                 </div>
                 <ul style={{ paddingLeft: "16px", fontSize: "0.84rem", color: "var(--text-muted)", marginBottom: "10px" }}>

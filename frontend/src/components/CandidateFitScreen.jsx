@@ -58,7 +58,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
       </div>
 
       {/* Grid: Job Fit Gauge & Highlights */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px", marginBottom: "28px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px", marginBottom: "28px" }}>
         
         {/* Job Fit Gauge Card */}
         <div className="glass-panel" style={{ padding: "28px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
@@ -74,7 +74,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
                 cy="60"
                 r="45"
                 fill="none"
-                stroke="rgba(255, 255, 255, 0.08)"
+                stroke="var(--gauge-track, #e2e8f0)"
                 strokeWidth="10"
               />
               <circle
@@ -123,7 +123,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
 
           {/* Strong Match */}
           <div style={{ marginBottom: "16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "#34d399", fontWeight: 700, marginBottom: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "var(--emerald)", fontWeight: 700, marginBottom: "8px" }}>
               <CheckCircle size={15} /> Strong Match (Direct Evidence in Resume)
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -137,7 +137,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
 
           {/* Partial Match */}
           <div style={{ marginBottom: "16px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "#fbbf24", fontWeight: 700, marginBottom: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "var(--amber)", fontWeight: 700, marginBottom: "8px" }}>
               <AlertTriangle size={15} /> Partial Match / Related Experience
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -151,7 +151,7 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
 
           {/* Missing / Weak */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "#fda4af", fontWeight: 700, marginBottom: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", color: "var(--rose)", fontWeight: 700, marginBottom: "8px" }}>
               <XCircle size={15} /> Missing / Weak Areas
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -168,35 +168,35 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
 
       {/* Flagged Claims & Potential Probing Questions (Assignment Spec Highlight) */}
       <div style={{
-        background: "rgba(245, 158, 11, 0.08)",
-        border: "1px solid rgba(245, 158, 11, 0.3)",
+        background: "rgba(217, 119, 6, 0.08)",
+        border: "1px solid rgba(217, 119, 6, 0.25)",
         borderRadius: "var(--radius-lg)",
         padding: "24px",
         marginBottom: "28px"
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-          <ShieldAlert size={22} color="#fbbf24" />
-          <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#fef3c7" }}>
+          <ShieldAlert size={22} color="var(--amber)" />
+          <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text-main)" }}>
             Potential Resume Claims Flagged for Interview Probing
           </h3>
         </div>
-        <p style={{ fontSize: "0.86rem", color: "#fde68a", marginBottom: "14px" }}>
+        <p style={{ fontSize: "0.86rem", color: "var(--text-muted)", marginBottom: "14px" }}>
           The AI Interviewer has identified these specific project and metric claims in your resume. In Level 2 and Level 3, the AI will test technical depth, baseline validity, and architecture choices.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {candidateData.potential_resume_claims.map((claim, idx) => (
             <div key={idx} style={{
-              background: "rgba(18, 26, 44, 0.75)",
+              background: "var(--bg-card)",
               padding: "12px 16px",
               borderRadius: "var(--radius-md)",
               fontSize: "0.9rem",
-              color: "#fff",
-              border: "1px solid rgba(245, 158, 11, 0.2)",
+              color: "var(--text-main)",
+              border: "1px solid var(--border-subtle)",
               display: "flex",
               alignItems: "flex-start",
               gap: "10px"
             }}>
-              <span style={{ color: "#fbbf24", fontWeight: 700 }}>🔍</span>
+              <span style={{ color: "var(--amber)", fontWeight: 700 }}>🔍</span>
               <span>{claim}</span>
             </div>
           ))}
@@ -204,17 +204,17 @@ export default function CandidateFitScreen({ candidateData, jobFit, roleData, on
       </div>
 
       {/* Projects & Strengths Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px", marginBottom: "32px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px", marginBottom: "32px" }}>
         
         {/* Projects */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-            <FileCode size={18} color="#818cf8" />
+            <FileCode size={18} color="var(--primary)" />
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Candidate Key Projects</h3>
           </div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
             {candidateData.relevant_projects.map((proj, idx) => (
-              <li key={idx} style={{ fontSize: "0.88rem", color: "var(--text-main)", background: "rgba(255, 255, 255, 0.03)", padding: "10px 14px", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
+              <li key={idx} style={{ fontSize: "0.88rem", color: "var(--text-main)", background: "var(--card-inner)", padding: "10px 14px", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
                 {proj}
               </li>
             ))}

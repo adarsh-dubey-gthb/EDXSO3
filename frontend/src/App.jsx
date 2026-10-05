@@ -24,6 +24,20 @@ import {
 export default function App() {
   const [currentStep, setStep] = useState("input");
   const [isAiActive, setIsAiActive] = useState(false);
+
+  // Theme system: Light Mode default with persistent preference
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("interview_theme") || "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("interview_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
   
   // Document inputs
   const [jdText, setJdText] = useState("");
@@ -234,6 +248,8 @@ export default function App() {
         onOpenRecruiter={() => setIsRecruiterOpen(true)}
         onReset={handleReset}
         isAiActive={isAiActive}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       <main style={{ flex: 1 }}>
@@ -303,7 +319,7 @@ export default function App() {
         marginTop: "40px"
       }}>
         <div>
-          AI Product Engineer Challenge — Assignment 3 • <strong style={{ color: "#818cf8" }}>Interview Accelerator</strong>
+          AI Product Engineer Challenge — Assignment 3 • <strong style={{ color: "var(--primary)" }}>Interview Accelerator</strong>
         </div>
         <div style={{ marginTop: "4px" }}>
           Built for Student Credibility • FastAPI Backend + React Vite Architecture

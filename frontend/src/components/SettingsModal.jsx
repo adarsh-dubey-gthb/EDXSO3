@@ -69,7 +69,7 @@ export default function SettingsModal({
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.75)",
+      backgroundColor: "var(--modal-backdrop)",
       backdropFilter: "blur(8px)",
       zIndex: 100,
       display: "flex",
@@ -81,9 +81,9 @@ export default function SettingsModal({
         width: "100%",
         maxWidth: "540px",
         padding: "30px",
-        background: "rgba(18, 24, 38, 0.95)",
-        boxShadow: "0 20px 50px rgba(0,0,0,0.8)",
-        border: "1px solid var(--border-highlight)"
+        background: "var(--bg-card)",
+        boxShadow: "var(--shadow-lg)",
+        border: "1px solid var(--border-subtle)"
       }}>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
@@ -142,7 +142,7 @@ export default function SettingsModal({
               onChange={(e) => setApiKeyInput(e.target.value)}
               placeholder="Paste your Gemini API key (e.g. AIzaSy...)"
               className="textarea-custom"
-              style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)", flex: 1, fontFamily: "monospace", fontSize: "0.85rem" }}
+              style={{ height: "42px", padding: "8px 12px", background: "var(--textarea-bg)", color: "var(--text-main)", flex: 1, fontFamily: "monospace", fontSize: "0.85rem" }}
             />
             {apiKeyInput && (
               <button
@@ -199,7 +199,7 @@ export default function SettingsModal({
             value={persona}
             onChange={(e) => setPersona(e.target.value)}
             className="textarea-custom"
-            style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)" }}
+            style={{ height: "42px", padding: "8px 12px", background: "var(--textarea-bg)", color: "var(--text-main)" }}
           >
             <option value="Professional & Rigorous">Professional & Rigorous (Standard Senior Technical Lead)</option>
             <option value="Supportive Coach">Supportive Coach (Encouraging, guiding on fundamentals)</option>
@@ -223,7 +223,7 @@ export default function SettingsModal({
               localStorage.setItem("interview_accelerator_industry_mode", e.target.value);
             }}
             className="textarea-custom"
-            style={{ height: "42px", padding: "8px 12px", background: "rgba(18, 26, 44, 0.92)" }}
+            style={{ height: "42px", padding: "8px 12px", background: "var(--textarea-bg)", color: "var(--text-main)" }}
           >
             <option value="General Technology (Standard Balanced)">General Technology (Standard Balanced)</option>
             <option value="Big Tech / FAANG (Scale & Architecture)">Big Tech / FAANG (Distributed Systems, Scalability & Architecture)</option>

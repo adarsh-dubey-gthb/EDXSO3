@@ -42,20 +42,20 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
       </div>
 
       {/* Grid Dashboard */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
         
         {/* Key Responsibilities */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(99, 102, 241, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Briefcase size={18} color="#818cf8" />
+            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(79, 70, 229, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Briefcase size={18} color="var(--primary)" />
             </div>
             <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>Key Responsibilities</h2>
           </div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
             {roleData.key_responsibilities.map((resp, idx) => (
               <li key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "0.9rem", color: "var(--text-main)", lineHeight: 1.5 }}>
-                <CheckCircle2 size={16} color="#6366f1" style={{ flexShrink: 0, marginTop: "3px" }} />
+                <CheckCircle2 size={16} color="var(--primary)" style={{ flexShrink: 0, marginTop: "3px" }} />
                 <span>{resp}</span>
               </li>
             ))}
@@ -65,8 +65,8 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
         {/* Required & Preferred Skills */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(16, 185, 129, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Star size={18} color="#34d399" />
+            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(5, 150, 105, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Star size={18} color="var(--emerald)" />
             </div>
             <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>Skills Breakdown</h2>
           </div>
@@ -101,15 +101,15 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
         {/* Technical Competencies */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(6, 182, 212, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Layers size={18} color="#67e8f9" />
+            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(2, 132, 199, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Layers size={18} color="var(--cyan)" />
             </div>
             <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>Technical Competencies</h2>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {roleData.technical_competencies.map((comp, idx) => (
               <div key={idx} style={{
-                background: "rgba(255, 255, 255, 0.03)",
+                background: "var(--card-inner)",
                 padding: "10px 14px",
                 borderRadius: "var(--radius-md)",
                 border: "1px solid var(--border-subtle)",
@@ -118,7 +118,7 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
                 alignItems: "center",
                 gap: "10px"
               }}>
-                <span style={{ color: "#67e8f9", fontWeight: 600 }}>0{idx + 1}</span>
+                <span style={{ color: "var(--cyan)", fontWeight: 600 }}>0{idx + 1}</span>
                 <span>{comp}</span>
               </div>
             ))}
@@ -128,8 +128,8 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
         {/* Behavioural Competencies */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(245, 158, 11, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Users size={18} color="#fbbf24" />
+            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(217, 119, 6, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Users size={18} color="var(--amber)" />
             </div>
             <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>Behavioural Competencies</h2>
           </div>
@@ -145,8 +145,8 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
         {/* Important Concepts & Keywords */}
         <div className="glass-panel" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(168, 85, 247, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Lightbulb size={18} color="#c084fc" />
+            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(124, 58, 237, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Lightbulb size={18} color="var(--purple)" />
             </div>
             <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>Important Concepts & Keywords</h2>
           </div>
@@ -167,12 +167,13 @@ export default function RoleAnalysisScreen({ roleData, onNext, onBack }) {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
               {roleData.important_keywords.map((kw, idx) => (
                 <span key={idx} style={{
-                  background: "rgba(255, 255, 255, 0.05)",
+                  background: "var(--card-inner)",
+                  border: "1px solid var(--border-subtle)",
                   padding: "3px 8px",
                   borderRadius: "6px",
                   fontSize: "0.78rem",
                   fontFamily: "var(--font-mono)",
-                  color: "#cbd5e1"
+                  color: "var(--text-muted)"
                 }}>
                   #{kw}
                 </span>

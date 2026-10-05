@@ -66,21 +66,21 @@ export default function InputScreen({
           alignItems: "center",
           gap: "8px",
           padding: "6px 16px",
-          background: "rgba(99, 102, 241, 0.12)",
-          border: "1px solid rgba(99, 102, 241, 0.3)",
+          background: "var(--card-inner)",
+          border: "1px solid var(--border-subtle)",
           borderRadius: "var(--radius-full)",
           marginBottom: "16px"
         }}>
-          <Sparkles size={16} color="#818cf8" />
-          <span style={{ fontSize: "0.85rem", color: "#a5b4fc", fontWeight: 600 }}>
-            AI-Powered Interview Accelerator
+          <Sparkles size={16} color="var(--primary)" />
+          <span style={{ fontSize: "0.85rem", color: "var(--primary)", fontWeight: 600 }}>
+            AI-Powered Technical & Behavioral Interview Accelerator
           </span>
         </div>
         
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "12px", lineHeight: 1.2 }}>
-          Step Into Your Real Interview <span style={{ background: "linear-gradient(135deg, #818cf8, #c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>100% Prepared</span>
+        <h1 style={{ fontSize: "2.4rem", marginBottom: "12px", lineHeight: 1.25 }}>
+          Step Into Your Real Interview <span style={{ background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>100% Prepared</span>
         </h1>
-        <p style={{ color: "var(--text-muted)", fontSize: "1.05rem", maxWidth: "720px", margin: "0 auto" }}>
+        <p style={{ color: "var(--text-muted)", fontSize: "1.05rem", maxWidth: "720px", margin: "0 auto", lineHeight: 1.6 }}>
           Upload or paste any Job Description and Candidate Resume. The system automatically uncovers employer requirements, calculates your Job Fit, and launches a dynamic 3-level voice & video mock interview.
         </p>
 
@@ -98,11 +98,11 @@ export default function InputScreen({
             justifyContent: "space-between",
             gap: "12px",
             fontSize: "0.82rem",
-            color: "#34d399",
+            color: "var(--emerald)",
             lineHeight: 1.45
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", flexShrink: 0 }} />
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 6px #10b981", flexShrink: 0 }} />
               <span>
                 <strong>Free AI Tier Enabled:</strong> Real-time Gemini evaluation is active. If the shared free tier exhausts, simply connect your own Gemini API key in Settings.
               </span>
@@ -110,7 +110,7 @@ export default function InputScreen({
             <button
               onClick={onOpenSettings}
               className="btn btn-secondary"
-              style={{ padding: "4px 10px", fontSize: "0.75rem", whiteSpace: "nowrap", borderColor: "rgba(16, 185, 129, 0.35)", color: "#a7f3d0" }}
+              style={{ padding: "4px 10px", fontSize: "0.75rem", whiteSpace: "nowrap", borderColor: "rgba(16, 185, 129, 0.35)", color: "var(--emerald)" }}
             >
               Settings
             </button>
@@ -128,7 +128,7 @@ export default function InputScreen({
             justifyContent: "space-between",
             gap: "12px",
             fontSize: "0.82rem",
-            color: "#fbbf24"
+            color: "var(--amber)"
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <Sparkles size={16} />
@@ -139,7 +139,7 @@ export default function InputScreen({
             <button
               onClick={onOpenSettings}
               className="btn btn-secondary"
-              style={{ padding: "4px 12px", fontSize: "0.76rem", whiteSpace: "nowrap", borderColor: "rgba(245, 158, 11, 0.4)", color: "#fef3c7" }}
+              style={{ padding: "4px 12px", fontSize: "0.76rem", whiteSpace: "nowrap", borderColor: "rgba(245, 158, 11, 0.4)", color: "var(--amber)" }}
             >
               Connect Key
             </button>
@@ -199,14 +199,14 @@ export default function InputScreen({
       )}
 
       {/* Dual Document Input Columns */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: "24px", marginBottom: "32px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px", marginBottom: "32px" }}>
         
         {/* Job Description Card */}
         <div className="glass-panel" style={{ padding: "24px", display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(99, 102, 241, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <FileText size={18} color="#818cf8" />
+              <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(79, 70, 229, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FileText size={18} color="var(--primary)" />
               </div>
               <h2 style={{ fontSize: "1.2rem", fontWeight: 700 }}>1. Job Description</h2>
             </div>
@@ -259,8 +259,8 @@ export default function InputScreen({
         <div className="glass-panel" style={{ padding: "24px", display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(16, 185, 129, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <FileText size={18} color="#34d399" />
+              <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(5, 150, 105, 0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FileText size={18} color="var(--emerald)" />
               </div>
               <h2 style={{ fontSize: "1.2rem", fontWeight: 700 }}>2. Candidate Resume</h2>
             </div>

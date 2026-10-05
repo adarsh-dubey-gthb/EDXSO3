@@ -299,7 +299,7 @@ def solution():
         marginBottom: "20px",
         flexWrap: "wrap",
         gap: "12px",
-        background: "rgba(18, 24, 38, 0.6)",
+        background: "var(--bg-card)",
         padding: "16px 24px",
         borderRadius: "var(--radius-lg)",
         border: "1px solid var(--border-subtle)"
@@ -343,7 +343,7 @@ def solution():
       </div>
 
       {/* Main 2-Column Split: AI Interviewer (Left) vs Candidate Camera & Response (Right) */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(460px, 1fr))", gap: "24px", marginBottom: "24px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "24px", marginBottom: "24px" }}>
         
         {/* Left Column: AI Interviewer Interactive Screen */}
         <div className="glass-panel" style={{ padding: "26px", display: "flex", flexDirection: "column" }}>
@@ -375,13 +375,13 @@ def solution():
             </div>
             
             <div style={{
-              background: "rgba(255, 255, 255, 0.03)",
-              border: "1px solid rgba(99, 102, 241, 0.3)",
+              background: "var(--card-inner)",
+              border: "1px solid var(--border-highlight)",
               borderRadius: "var(--radius-md)",
               padding: "18px 20px",
               fontSize: "1.08rem",
               lineHeight: 1.6,
-              color: "#ffffff",
+              color: "var(--text-main)",
               fontFamily: "var(--font-heading)",
               fontWeight: 500
             }}>
@@ -394,8 +394,8 @@ def solution():
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(99, 102, 241, 0.08)",
-              border: "1px solid rgba(99, 102, 241, 0.25)",
+              background: "var(--card-inner)",
+              border: "1px solid var(--border-subtle)",
               borderRadius: "var(--radius-md)",
               padding: "10px 16px",
               flexWrap: "wrap",
@@ -542,11 +542,11 @@ def solution():
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              background: "rgba(18, 26, 44, 0.9)",
+              background: "var(--stage-pill-bg)",
               backdropFilter: "blur(8px)",
               padding: "6px 14px",
               borderRadius: "var(--radius-full)",
-              border: "1px solid var(--border-subtle)"
+              border: "1px solid var(--stage-pill-border)"
             }}>
               {/* Speaking Pace */}
               <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.76rem" }}>
@@ -720,9 +720,9 @@ def solution():
 
             {/* Code Workspace Editor Panel */}
             {responseMode === "code" && (
-              <div style={{ marginBottom: "12px", background: "rgba(15, 21, 35, 0.95)", border: "1px solid rgba(99, 102, 241, 0.3)", borderRadius: "var(--radius-md)", padding: "12px" }}>
+              <div style={{ marginBottom: "12px", background: "var(--card-inner)", border: "1px solid var(--border-highlight)", borderRadius: "var(--radius-md)", padding: "12px" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
-                  <span style={{ fontSize: "0.74rem", color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
+                  <span style={{ fontSize: "0.74rem", color: "var(--primary)", fontWeight: 700, textTransform: "uppercase" }}>
                     Code Editor ({codeLanguage})
                   </span>
                   <button
@@ -740,7 +740,7 @@ def solution():
                   value={codeContent}
                   onChange={(e) => setCodeContent(e.target.value)}
                   placeholder="Write algorithm, architecture schema, or SQL query here..."
-                  style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", background: "rgba(10, 14, 23, 0.95)", color: "#a5b4fc" }}
+                  style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", background: "var(--code-bg)", color: "var(--code-text)" }}
                 />
               </div>
             )}

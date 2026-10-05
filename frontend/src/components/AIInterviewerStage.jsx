@@ -338,7 +338,7 @@ export default function AIInterviewerStage({
         width: "100%",
         minHeight: "260px",
         height: "260px",
-        background: "linear-gradient(180deg, rgba(20, 27, 45, 0.95) 0%, rgba(15, 22, 38, 0.98) 100%)",
+        background: "var(--stage-bg)",
         border: "1px solid var(--border-subtle)",
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
@@ -372,11 +372,11 @@ export default function AIInterviewerStage({
             display: "flex",
             alignItems: "center",
             gap: "7px",
-            background: "rgba(18, 26, 44, 0.88)",
+            background: "var(--stage-pill-bg)",
             backdropFilter: "blur(8px)",
             padding: "5px 12px",
             borderRadius: "var(--radius-full)",
-            border: "1px solid rgba(255, 255, 255, 0.1)"
+            border: "1px solid var(--stage-pill-border)"
           }}
         >
           <span
@@ -414,11 +414,11 @@ export default function AIInterviewerStage({
           <div
             style={{
               display: "flex",
-              background: "rgba(18, 26, 44, 0.88)",
+              background: "var(--stage-pill-bg)",
               backdropFilter: "blur(8px)",
               padding: "2px",
               borderRadius: "var(--radius-full)",
-              border: "1px solid rgba(255, 255, 255, 0.1)"
+              border: "1px solid var(--stage-pill-border)"
             }}
           >
             <button
@@ -488,7 +488,7 @@ export default function AIInterviewerStage({
               alignItems: "center",
               justifyContent: "center",
               position: "relative",
-              background: "radial-gradient(circle at 50% 40%, rgba(42, 56, 82, 0.6) 0%, rgba(16, 23, 39, 0.96) 75%)"
+              background: "var(--stage-bg)"
             }}
           >
             {/* Background Holographic Studio Aura */}
@@ -791,11 +791,11 @@ export default function AIInterviewerStage({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: "rgba(18, 26, 44, 0.92)",
+          background: "var(--stage-pill-bg)",
           backdropFilter: "blur(10px)",
           padding: "6px 14px",
           borderRadius: "var(--radius-full)",
-          border: "1px solid var(--border-subtle)",
+          border: "1px solid var(--stage-pill-border)",
           zIndex: 10
         }}
       >
@@ -815,7 +815,7 @@ export default function AIInterviewerStage({
             <Bot size={13} color="#ffffff" />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", lineHeight: 1.2 }}>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--text-main)", lineHeight: 1.2 }}>
               {config.name}
             </span>
             <span style={{ fontSize: "0.68rem", color: "var(--text-dim)", lineHeight: 1.1 }}>
